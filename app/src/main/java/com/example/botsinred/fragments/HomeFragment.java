@@ -1,6 +1,10 @@
 package com.example.botsinred.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,37 +12,35 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-
 import com.example.botsinred.R;
-import com.example.botsinred.activities.MainActivity;
 import com.example.botsinred.adapters.DateAdapter;
 import com.example.botsinred.adapters.DoseAdapter;
 import com.example.botsinred.models.DateModel;
 import com.example.botsinred.models.DoseModel;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements DoseAdapter.OnViewItemClickListener {
 
     //for doses
-    ArrayList<DoseModel> arrayListDoses;
-    RecyclerView recyclerViewDoses;
-    DoseAdapter doseAdapter;
+    private ArrayList<DoseModel> arrayListDoses;
+    private RecyclerView recyclerViewDoses;
+    private DoseAdapter doseAdapter;
 
     //for dates
-    ArrayList<DateModel> arrayListDates;
-    RecyclerView recyclerViewDates;
-    DateAdapter dateAdapter;
-    
+    private ArrayList<DateModel> arrayListDates;
+    private RecyclerView recyclerViewDates;
+    private DateAdapter dateAdapter;
+
+    //UI Components
+    private RoundedImageView roundedImageViewAvatar;
+
+
     public HomeFragment() {
         // Required empty public constructor
     }
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,15 +64,26 @@ public class HomeFragment extends Fragment {
 
         //setting up adapters
         setUpDoseAdapter();
-
         setUpDatesAdapter();
+
+        //add listeners
+        addListener();
+    }
+
+    private void addListener() {
+        roundedImageViewAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new ProfileFragment());
+            }
+        });
     }
 
     private void setUpDatesAdapter() {
         //add data to the dates list
         addDates();
         dateAdapter = new DateAdapter(arrayListDates, getActivity());
-        recyclerViewDates.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
+        recyclerViewDates.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         recyclerViewDates.setAdapter(dateAdapter);
     }
 
@@ -88,7 +101,7 @@ public class HomeFragment extends Fragment {
 
         //add data to the dose list
         addDoses();
-        doseAdapter = new DoseAdapter(arrayListDoses, getActivity());
+        doseAdapter = new DoseAdapter(arrayListDoses, getActivity(), this);
         recyclerViewDoses.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewDoses.setAdapter(doseAdapter);
     }
@@ -112,5 +125,25 @@ public class HomeFragment extends Fragment {
 
         arrayListDates = new ArrayList<>();
         recyclerViewDates = getView().findViewById(R.id.recyclerViewDates);
+
+        roundedImageViewAvatar = getView().findViewById(R.id.roundedImageViewAvatar);
+    }
+
+
+    private void loadFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frameLayout, fragment)
+                .commit();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
+    }
+
+
+    private void showMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

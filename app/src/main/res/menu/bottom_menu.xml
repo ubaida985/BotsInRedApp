@@ -20,8 +20,8 @@
         android:icon="@drawable/icon_profile"
         />
 
-    <item android:id="@+id/settings"
-    android:title="@string/settings"
-    android:icon="@drawable/icon_settings"
+    <item android:id="@+id/shop"
+    android:title="@string/shop"
+    android:icon="@drawable/icon_shop"
     />
 </menu>

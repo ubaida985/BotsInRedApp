@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".fragments.CallFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/call" />
+        android:text="@string/coming_soon" />
 
 </FrameLayout>

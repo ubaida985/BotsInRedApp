@@ -16,19 +16,22 @@ import java.util.ArrayList;
 
 public class DoseAdapter extends RecyclerView.Adapter<DoseAdapter.ViewHolder>{
 
-    ArrayList<DoseModel> arrayListDoses;
-    Context context;
+    private ArrayList<DoseModel> arrayListDoses;
+    private Context context;
 
-    public DoseAdapter(ArrayList<DoseModel> arrayListDoses, Context context) {
+    private OnViewItemClickListener onViewItemClickListener;
+
+    public DoseAdapter(ArrayList<DoseModel> arrayListDoses, Context context, OnViewItemClickListener onViewItemClickListener) {
         this.arrayListDoses = arrayListDoses;
         this.context = context;
+        this.onViewItemClickListener = onViewItemClickListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_task, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, onViewItemClickListener);
     }
 
     @Override
@@ -48,11 +51,11 @@ public class DoseAdapter extends RecyclerView.Adapter<DoseAdapter.ViewHolder>{
         return arrayListDoses.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView textViewDay, textViewDate, textViewMonth, textViewDoseName, textViewDoseDesc, textViewDoseQty, textViewDoseTime;
-
-        public ViewHolder(@NonNull View itemView) {
+        private OnViewItemClickListener onViewItemClickListener;
+        public ViewHolder(@NonNull View itemView, OnViewItemClickListener onViewItemClickListener) {
             super(itemView);
 
             textViewDay = itemView.findViewById(R.id.textViewDay);
@@ -62,6 +65,19 @@ public class DoseAdapter extends RecyclerView.Adapter<DoseAdapter.ViewHolder>{
             textViewDoseDesc = itemView.findViewById(R.id.textViewDoseDesc);
             textViewDoseQty = itemView.findViewById(R.id.textViewDoseQty);
             textViewDoseTime = itemView.findViewById(R.id.textViewDoseTime);
+
+            itemView.setOnClickListener(this);
+            this.onViewItemClickListener = onViewItemClickListener;
+
         }
+
+        @Override
+        public void onClick(View v) {
+            onViewItemClickListener.onItemClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnViewItemClickListener{
+        void onItemClick( int position );
     }
 }

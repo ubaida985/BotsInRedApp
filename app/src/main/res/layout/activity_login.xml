@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    tools:context=".activities.MainActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        >
+
+
+        <ImageView
+            android:id="@+id/imageViewBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/logback"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:src="@drawable/logo"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/imageViewLogo"
+            app:layout_constraintLeft_toLeftOf="@id/imageViewLogo"
+            app:layout_constraintRight_toRightOf="@id/imageViewLogo"
+            app:layout_constraintVertical_bias="0.3"
+            android:text="Welcome to Bots in Red"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="@dimen/_14ssp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/logInNavigation"
+        app:mbn_circleColor="@color/colorPrimary"
+        app:mbn_selectedIconColor="@color/colorAccent"
+        app:mbn_countTextColor="@color/colorPrimary"
+        app:mbn_countBackgroundColor="@color/colorAccent"
+        app:mbn_defaultIconColor="@color/colorPrimary"
+        app:mbn_backgroundBottomColor="@color/colorAccent"
+        />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabGoogle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/google"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/_30sdp" />
+
+</LinearLayout>
+
+    <!--
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activities.LoginActivity">
+
+        <ImageView
+            android:id="@+id/imageViewBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/logback"
+            app:layout_constraintHeight_percent="0.27"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutLogin"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/white_rect_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintHeight_percent="0.78"
+            >
+
+
+
+            <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/logInNavigation"
+                app:mbn_circleColor="@color/colorPrimary"
+                app:mbn_selectedIconColor="@color/colorAccent"
+                app:mbn_countTextColor="@color/colorPrimary"
+                app:mbn_countBackgroundColor="@color/colorAccent"
+                app:mbn_defaultIconColor="@color/colorPrimary"
+                app:mbn_backgroundBottomColor="@color/colorAccent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintVertical_bias="0"
+                />
+
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintHeight_percent="0.7"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintVertical_bias="0.2"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabGoogle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:src="@drawable/google"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:src="@drawable/logo"
+            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/constraintLayoutLogin"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/imageViewLogo"
+            app:layout_constraintLeft_toLeftOf="@id/imageViewLogo"
+            app:layout_constraintRight_toRightOf="@id/imageViewLogo"
+            app:layout_constraintBottom_toTopOf="@id/constraintLayoutLogin"
+            app:layout_constraintVertical_bias="0.3"
+            android:text="Welcome to Bots in Red"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="@dimen/_14ssp"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    -->

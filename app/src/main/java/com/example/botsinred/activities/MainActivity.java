@@ -12,7 +12,7 @@ import com.example.botsinred.fragments.AddDoseFragment;
 import com.example.botsinred.fragments.CallFragment;
 import com.example.botsinred.fragments.HomeFragment;
 import com.example.botsinred.fragments.ProfileFragment;
-import com.example.botsinred.fragments.SettingFragment;
+import com.example.botsinred.fragments.ShopFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_home));
         bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.icon_add));
         bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.icon_profile));
-        bottomNavigation.add(new MeowBottomNavigation.Model(5, R.drawable.icon_settings));
+        bottomNavigation.add(new MeowBottomNavigation.Model(5, R.drawable.icon_shop));
 
         bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new ProfileFragment();
                         break;
                     case 5:
-                        fragment = new SettingFragment();
+                        fragment = new ShopFragment();
                         break;
                 }
                 loadFragment(fragment);
@@ -88,14 +88,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
 
+
+    //helpers
     private void loadFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frameLayout, fragment)
                 .commit();
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

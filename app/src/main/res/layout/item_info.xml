@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    app:cardCornerRadius="@dimen/_10sdp"
+    app:cardElevation="@dimen/_3sdp"
+    app:cardUseCompatPadding="true">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:padding="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:padding="@dimen/_1sdp"
+                android:src="@drawable/icon_phone"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"/>
+            <TextView
+                android:text="Mobile"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textColor="#605E5E"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+        <TextView
+            android:text="+91 98000000000"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
