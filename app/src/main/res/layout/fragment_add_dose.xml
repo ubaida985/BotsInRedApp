@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/botsbackground"
-    tools:context=".fragments.AddDoseFragment">
+    android:background="@color/colorPrimaryDark"
+    tools:context=".fragments.dose.AddDoseFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -38,6 +38,7 @@
                 />
 
             <EditText
+                android:id="@+id/editTextPillName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Pill Name"
@@ -62,6 +63,7 @@
                 android:layout_marginBottom="@dimen/_20sdp"
                 >
                 <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/roundedImageViewDecrease"
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:src="@drawable/icon_sub"
@@ -69,6 +71,7 @@
                     android:background="@color/error"
                     />
                 <TextView
+                    android:id="@+id/textViewPillQty"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_weight="1"
@@ -79,6 +82,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14ssp"/>
                 <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/roundedImageViewIncrease"
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
                     android:src="@drawable/icon_add"
@@ -86,6 +90,21 @@
 
                     />
             </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonAddPill"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/round_button_bg"
+                android:text="Add Dose"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:backgroundTint="@color/colorAccent"
+                />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

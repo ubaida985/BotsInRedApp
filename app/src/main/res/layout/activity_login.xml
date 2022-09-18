@@ -55,7 +55,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+<!--
     <com.etebarian.meowbottomnavigation.MeowBottomNavigation
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
         app:mbn_defaultIconColor="@color/colorPrimary"
         app:mbn_backgroundBottomColor="@color/colorAccent"
         />
-
+-->
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_marginTop="@dimen/_20sdp"

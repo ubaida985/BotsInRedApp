@@ -4,44 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    android:padding="@dimen/_10sdp"
     tools:context=".fragments.tabs.SignUpFragment">
 
 
-
-    <EditText
-        android:id="@+id/editTextName"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textViewNumber"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="OTP sent to +91 8177991122"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.8"
-        android:hint="Name"
-        android:paddingLeft="@dimen/_15sdp"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:paddingRight="@dimen/_10sdp"
-        android:background="@drawable/round_edit_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
         />
-
-    <EditText
-        android:id="@+id/editTextPhone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextName"
-        app:layout_constraintWidth_percent="0.8"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:hint="Mobile Number"
-        android:paddingLeft="@dimen/_15sdp"
-        android:paddingTop="@dimen/_10sdp"
-        android:inputType="number"
-        android:paddingBottom="@dimen/_10sdp"
-        android:paddingRight="@dimen/_10sdp"
-        android:background="@drawable/round_edit_bg"
-        />
-
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -49,7 +28,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextPhone"
+        app:layout_constraintTop_toBottomOf="@id/textViewNumber"
         app:layout_constraintWidth_percent="0.8"
         android:layout_marginTop="@dimen/_15sdp"
         android:hint="Password"
@@ -61,7 +40,7 @@
         />
 
     <Button
-        android:id="@+id/buttonSignUp"
+        android:id="@+id/buttonLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,11 +58,11 @@
         />
 
     <TextView
-        android:id="@+id/textViewSwitchLogin"
+        android:id="@+id/textViewMistake"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Already registered? Sign in"
-        app:layout_constraintTop_toBottomOf="@id/buttonSignUp"
+        android:text="Made a mistake? Try Again"
+        app:layout_constraintTop_toBottomOf="@id/buttonLogin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/_10sdp"

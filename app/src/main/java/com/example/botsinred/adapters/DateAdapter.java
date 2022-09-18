@@ -36,8 +36,8 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.ViewHodler>{
     @Override
     public void onBindViewHolder(@NonNull ViewHodler holder, int position) {
         DateModel date = arrayListDates.get(position);
-        holder.textViewDate.setText(date.getDate());
-        holder.textViewDay.setText(date.getDay());
+        holder.textViewDate.setText(date.getDay());
+        holder.textViewDay.setText(date.getDayOnDate());
     }
 
     @Override

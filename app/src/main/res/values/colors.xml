@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#eeeeee</color>
     <color name="colorAccent">#4885ed</color>
     <color name="black">#000</color>
+    <color name="dark">#111</color>
     <color name="error">#FF0000</color>
     <color name="success">#00FF00</color>
 

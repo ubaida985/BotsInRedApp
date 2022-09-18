@@ -7,16 +7,24 @@ import java.util.HashMap;
 public class ScheduleModel {
     String time;
     String name;
-    HashMap<String, Integer> pills;
+    ArrayList<CategoryModel> categories;
     Date date;
+
+    /**
+     * DOSE
+     * Time, name, list of categories
+     *
+     * CAT
+     * list of pills and qty
+     */
 
     public ScheduleModel() {
     }
 
-    public ScheduleModel(String time, String name, HashMap<String, Integer> pills, Date date) {
+    public ScheduleModel(String time, String name, ArrayList<CategoryModel> categories, Date date) {
         this.time = time;
         this.name = name;
-        this.pills = pills;
+        this.categories = categories;
         this.date = date;
     }
 
@@ -36,13 +44,14 @@ public class ScheduleModel {
         this.name = name;
     }
 
-    public HashMap<String, Integer> getPills() {
-        return pills;
+    public ArrayList<CategoryModel> getCategories() {
+        return categories;
     }
 
-    public void setPills(HashMap<String, Integer> pills) {
-        this.pills = pills;
+    public void setCategories(ArrayList<CategoryModel> categories) {
+        this.categories = categories;
     }
+
 
     public Date getDate() {
         return date;

@@ -1,53 +1,47 @@
-package com.example.botsinred.fragments;
+package com.example.botsinred.fragments.dose;
 
-import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.botsinred.R;
 import com.example.botsinred.adapters.DateAdapter;
 import com.example.botsinred.adapters.ScheduleAdapter;
 import com.example.botsinred.database.Data;
+import com.example.botsinred.fragments.ProfileFragment;
 import com.example.botsinred.models.CategoryModel;
 import com.example.botsinred.models.DateModel;
 import com.example.botsinred.models.ScheduleModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItemClickListener {
+public class DosesFragment extends Fragment implements ScheduleAdapter.OnViewItemClickListener {
 
     //for doses
     private ArrayList<ScheduleModel> schedules;
-    ArrayList<CategoryModel> categories;
+    private ArrayList<CategoryModel> categories;
     private RecyclerView recyclerViewDoses;
     private ScheduleAdapter scheduleAdapter;
 
-    //for dates
-    private ArrayList<DateModel> arrayListDates;
-    private RecyclerView recyclerViewDates;
-    private DateAdapter dateAdapter;
-
     //UI Components
     private RoundedImageView roundedImageViewAvatar;
+    private FloatingActionButton fabAddDose;
 
-
-    public HomeFragment() {
+    public DosesFragment() {
         // Required empty public constructor
     }
 
@@ -56,13 +50,11 @@ public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItem
         super.onCreate(savedInstanceState);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_doses, container, false);
     }
 
     @Override
@@ -74,7 +66,6 @@ public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItem
 
         //setting up adapters
         setUpDoseAdapter();
-        setUpDatesAdapter();
 
         //add listeners
         addListener();
@@ -87,43 +78,20 @@ public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItem
                 loadFragment(new ProfileFragment());
             }
         });
+
+        fabAddDose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new DoseDetailFragment());
+            }
+        });
     }
 
-    private void setUpDatesAdapter() {
-        //add data to the dates list
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            addDates();
-        }
-        dateAdapter = new DateAdapter(arrayListDates, getActivity());
-        recyclerViewDates.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        recyclerViewDates.setAdapter(dateAdapter);
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void addDates() {
-
-        Calendar cal = Calendar.getInstance();
-        arrayListDates.add(new DateModel(cal.getTime()));
-        cal.add(Calendar.DATE, 1);
-        arrayListDates.add(new DateModel(cal.getTime()));
-        cal.add(Calendar.DATE, 1);
-        arrayListDates.add(new DateModel(cal.getTime()));
-        cal.add(Calendar.DATE, 1);
-        arrayListDates.add(new DateModel(cal.getTime()));
-        cal.add(Calendar.DATE, 1);
-        arrayListDates.add(new DateModel(cal.getTime()));
-        cal.add(Calendar.DATE, 1);
-        arrayListDates.add(new DateModel(cal.getTime()));
-        cal.add(Calendar.DATE, 1);
-        arrayListDates.add(new DateModel(cal.getTime()));
-
-    }
 
     private void setUpDoseAdapter() {
+        Data data = new Data();
+        schedules = data.getSchedule();
 
-        //add data to the dose list
-        setData();
         scheduleAdapter = new ScheduleAdapter(schedules, getActivity(), this);
         recyclerViewDoses.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewDoses.setAdapter(scheduleAdapter);
@@ -132,27 +100,12 @@ public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItem
     private void addDoses() {
     }
 
-    private void setData() {
-        Data data = new Data();
-        schedules = data.getSchedule();
-        if( schedules == null ){
-            schedules = new ArrayList<>();
-            addDoses();
-        }else{
-            return;
-        }
-        data.setSchedule(schedules);
-    }
-
     private void initializer() {
         recyclerViewDoses = getView().findViewById(R.id.recyclerviewDoses);
         schedules = new ArrayList<>();
-        categories = new ArrayList<>();
-
-        arrayListDates = new ArrayList<>();
-        recyclerViewDates = getView().findViewById(R.id.recyclerViewDates);
 
         roundedImageViewAvatar = getView().findViewById(R.id.roundedImageViewAvatar);
+        fabAddDose = getView().findViewById(R.id.fabAddDose);
     }
 
 
@@ -165,7 +118,13 @@ public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItem
 
     @Override
     public void onItemClick(int position) {
-
+        ScheduleModel schedule = schedules.get(position);
+        Fragment fragment = new PillCategoryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("doseName", schedule.getName());
+        bundle.putString("doseTime", schedule.getTime());
+        fragment.setArguments(bundle);
+        loadFragment(fragment);
     }
 
 

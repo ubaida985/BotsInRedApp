@@ -13,16 +13,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.botsinred.R;
 import com.example.botsinred.activities.MainActivity;
 
 public class LogInFragment extends Fragment {
-    private EditText editTextPhone, editTextPassword;
+    private EditText editTextPhone;
     private Button buttonLogin;
-    private TextView textViewForgotPassword;
 
-    final float opacity = 0;
+    private String phoneNumber;
     public LogInFragment() {
         // Required empty public constructor
     }
@@ -59,8 +59,13 @@ public class LogInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if( validateLogin() ){
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
+                    Fragment fragment = new SignUpFragment();
+                    Bundle data = new Bundle();
+                    data.putString("phoneNumber", phoneNumber);
+                    fragment.setArguments(data);
+                    loadFragment(fragment);
+                }else{
+                    showMessage("Please enter a valid number");
                 }
             }
         });
@@ -68,17 +73,32 @@ public class LogInFragment extends Fragment {
 
     private void initialize() {
         editTextPhone = getView().findViewById(R.id.editTextPhone);
-        editTextPassword = getView().findViewById(R.id.editTextPassword);
         buttonLogin = getView().findViewById(R.id.buttonLogin);
-        textViewForgotPassword = getView().findViewById(R.id.textViewForgotPassword);
     }
 
 
     //helpers
     private boolean validateLogin() {
-        return true;
+        phoneNumber = editTextPhone.getText().toString();
+        if( phoneNumber.length() == 10 ){
+            return true;
+        }
+        return false;
     }
 
+    //helpers
+    private void loadFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frameLayout, fragment)
+                .commit();
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
     private void animations() {
         editTextPhone.setTranslationY(300);
         editTextPassword.setTranslationY(300);
@@ -95,5 +115,5 @@ public class LogInFragment extends Fragment {
         buttonLogin.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(800).start();
         textViewForgotPassword.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(100).start();
     }
-
+    */
 }

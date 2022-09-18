@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:background="@drawable/botsbackground"
+    android:background="@color/colorPrimaryDark"
     tools:context=".fragments.ProfileFragment">
     <LinearLayout
         android:orientation="vertical"
@@ -37,7 +37,7 @@
             <TextView
                 android:text="My"
                 android:textStyle="normal"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/_20ssp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_width="match_parent"
@@ -45,7 +45,7 @@
             <TextView
                 android:text="Profile"
                 android:textStyle="bold"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/_25ssp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_width="match_parent"

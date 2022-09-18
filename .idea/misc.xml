@@ -18,14 +18,19 @@
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/date.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_add_dose.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_call.xml" value="0.27447916666666666" />
+        <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_dose_detail.xml" value="0.22826086956521738" />
+        <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_doses.xml" value="0.22826086956521738" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_home.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_log_in.xml" value="0.1265625" />
+        <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_pill_category.xml" value="0.22826086956521738" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_profile.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_setting.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_shop.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_sign_up.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_add.xml" value="0.27447916666666666" />
+        <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_category.xml" value="0.22826086956521738" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_date.xml" value="0.4" />
+        <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_dose.xml" value="0.22826086956521738" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_email.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_image.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_info.xml" value="0.27447916666666666" />

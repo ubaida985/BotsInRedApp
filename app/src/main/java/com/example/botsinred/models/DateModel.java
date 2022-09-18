@@ -1,15 +1,36 @@
 package com.example.botsinred.models;
 
-public class DateModel {
-    String day;
-    String date;
+import java.util.Date;
 
-    public DateModel(String day, String date) {
-        this.day = day;
+public class DateModel {
+   Date date;
+   String dayOnDate, day;
+
+    public DateModel() {
+    }
+
+    public DateModel(Date date) {
+        this.date = date;
+
+        String[] dateContainer = date.toString().split(" ");
+        dayOnDate = dateContainer[0];
+        day = dateContainer[2];
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public DateModel() {
+    public String getDayOnDate() {
+        return dayOnDate;
+    }
+
+    public void setDayOnDate(String dayOnDate) {
+        this.dayOnDate = dayOnDate;
     }
 
     public String getDay() {
@@ -18,13 +39,5 @@ public class DateModel {
 
     public void setDay(String day) {
         this.day = day;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 }

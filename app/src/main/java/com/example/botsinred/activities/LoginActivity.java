@@ -14,9 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private FloatingActionButton fabGoogle, fabTwitter, fabFacebook;
-    private MeowBottomNavigation logInNavigation;
-
+    private FloatingActionButton fabGoogle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +25,13 @@ public class LoginActivity extends AppCompatActivity {
         initialize();
 
         //setup top menu bar
-        setupTopBar();
+        //setupTopBar();
+
+        loadFragment(new LogInFragment());
 
     }
 
-
+/**
     private void setupTopBar() {
         logInNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.icon_profile));
         logInNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.icon_signup));
@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+**/
 
     private void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -87,6 +88,5 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initialize() {
         fabGoogle = findViewById(R.id.fabGoogle);
-        logInNavigation = findViewById(R.id.logInNavigation);
     }
 }

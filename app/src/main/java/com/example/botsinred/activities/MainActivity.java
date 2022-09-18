@@ -8,11 +8,11 @@ import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.botsinred.R;
-import com.example.botsinred.fragments.AddDoseFragment;
 import com.example.botsinred.fragments.CallFragment;
 import com.example.botsinred.fragments.HomeFragment;
 import com.example.botsinred.fragments.ProfileFragment;
 import com.example.botsinred.fragments.ShopFragment;
+import com.example.botsinred.fragments.dose.DosesFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new HomeFragment();
                         break;
                     case 3:
-                        fragment = new AddDoseFragment();
+                        fragment = new DosesFragment();
                         break;
                     case 4:
                         fragment = new ProfileFragment();
