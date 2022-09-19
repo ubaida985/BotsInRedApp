@@ -59,6 +59,7 @@ public class SignUpFragment extends Fragment {
 
         //set listeners
         setListeners();
+
     }
 
     private void setValues() {

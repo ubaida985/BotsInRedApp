@@ -1,6 +1,13 @@
 package com.example.botsinred.fragments.dose;
 
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +25,11 @@ import com.example.botsinred.R;
 import com.example.botsinred.database.Data;
 import com.example.botsinred.models.CategoryModel;
 import com.example.botsinred.models.ScheduleModel;
+import com.example.botsinred.utilities.AlarmReceiver;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +43,15 @@ public class AddDoseFragment extends Fragment {
     private Button buttonAddPill;
 
     String doseName, doseTime, doseCategory, pillName, pillQty;
+
+
+    // for setting alarms
+    Calendar calendar;
+    AlarmManager alarmManager;
+    PendingIntent pendingIntent;
+    ArrayList<PendingIntent> pendingIntents;
+    int hours, mins;
+
     public AddDoseFragment() {
         // Required empty public constructor
     }
@@ -64,6 +82,7 @@ public class AddDoseFragment extends Fragment {
 
         //add listeners
         addListeners();
+
     }
 
     private void addListeners() {
@@ -109,6 +128,13 @@ public class AddDoseFragment extends Fragment {
                         categories.add(new CategoryModel(doseCategory, pills));
                         schedules.add(new ScheduleModel(doseTime, doseName, categories, new Date()));
                         data.setSchedule(schedules);
+                        // for setting alarm
+                        hours = Integer.parseInt(""+doseTime.charAt(0)+doseTime.charAt(1));
+                        mins = Integer.parseInt(""+doseTime.charAt(3)+doseTime.charAt(4));
+                        if( doseTime.charAt(6) == 'P' ){
+                            hours += 12;
+                        }
+                        setAnAlarm();
                         loadFragment(fragment);
                         return;
                     }
@@ -143,6 +169,7 @@ public class AddDoseFragment extends Fragment {
         });
     }
 
+
     private boolean validateEntries() {
         pillName = editTextPillName.getText().toString();
         pillQty = textViewPillQty.getText().toString();
@@ -163,6 +190,7 @@ public class AddDoseFragment extends Fragment {
         roundedImageViewDecrease = getView().findViewById(R.id.roundedImageViewDecrease);
         roundedImageViewIncrease = getView().findViewById(R.id.roundedImageViewIncrease);
         buttonAddPill = getView().findViewById(R.id.buttonAddPill);
+        pendingIntents = new ArrayList<>();
     }
 
     //helpers
@@ -186,5 +214,55 @@ public class AddDoseFragment extends Fragment {
     private void showMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
+
+
+    //alarm functions
+    private void setAnAlarm() {
+        //creating the notification channel
+        createNotificationChannel();
+
+        calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
+        calendar.set(Calendar.MINUTE, mins);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        setAlarm();
+        showMessage(doseTime);
+    }
+
+    private void setAlarm ( ) {
+        alarmManager = ( AlarmManager ) getActivity().getSystemService ( Context.ALARM_SERVICE ) ;
+        Intent intent = new Intent ( getActivity() , AlarmReceiver.class );
+        pendingIntent = PendingIntent.getBroadcast ( getActivity() , AlarmReceiver.reqCode , intent , PendingIntent.FLAG_IMMUTABLE ) ;
+        //alarms won't repeat daily
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        //alarmManager.setRepeating( AlarmManager.RTC_WAKEUP , calendar.getTimeInMillis ( ), AlarmManager.INTERVAL_DAY , pendingIntent );
+        pendingIntents.add(pendingIntent);
+        ++AlarmReceiver.reqCode;
+
+    }
+
+    private void cancelAlarm ( ) {
+        if ( alarmManager == null ) {
+            alarmManager = ( AlarmManager ) getActivity().getSystemService ( Context.ALARM_SERVICE ) ;
+        }
+        for( PendingIntent pendingIntent : pendingIntents ){
+            alarmManager.cancel ( pendingIntent ) ;
+        }
+    }
+
+    private void createNotificationChannel ( ) {
+        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ) {
+            CharSequence name = "Dose" ; //this should be according to the application
+            String description = "Channel for the application" ; //this should always have the description of the string above
+            int importance = NotificationManager.IMPORTANCE_HIGH ;
+            NotificationChannel channel = new NotificationChannel ( "RedBots" , name , importance ) ; //id should be same as in the AlarmReceiver class created
+            channel.setDescription ( description ) ;
+
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class) ;
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 
 }

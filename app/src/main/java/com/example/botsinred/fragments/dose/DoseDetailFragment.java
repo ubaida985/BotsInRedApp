@@ -1,6 +1,13 @@
 package com.example.botsinred.fragments.dose;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,8 +25,13 @@ import android.widget.Toast;
 
 import com.example.botsinred.R;
 import com.example.botsinred.models.ScheduleModel;
+import com.example.botsinred.utilities.AlarmReceiver;
+import com.google.android.material.timepicker.MaterialTimePicker;
+import com.google.android.material.timepicker.TimeFormat;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class DoseDetailFragment extends Fragment {
@@ -28,7 +40,7 @@ public class DoseDetailFragment extends Fragment {
     private Button buttonTime, buttonSubmit;
 
     String doseName, doseTime;
-    int hours, mins;
+    MaterialTimePicker picker;
 
     public DoseDetailFragment() {
         // Required empty public constructor
@@ -56,6 +68,7 @@ public class DoseDetailFragment extends Fragment {
 
         //add listeners
         addListeners();
+
     }
 
     private void addListeners() {
@@ -88,7 +101,7 @@ public class DoseDetailFragment extends Fragment {
             showMessage("Enter a valid dose name");
             return false;
         }
-        if( doseTime.length() != 5 ){
+        if( doseTime.length() <= 5 ){
             showMessage("Select time");
             return false;
         }
@@ -96,26 +109,39 @@ public class DoseDetailFragment extends Fragment {
     }
 
     private void pickTime() {
-        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+        picker = new MaterialTimePicker.Builder ( )
+                .setTimeFormat ( TimeFormat.CLOCK_12H )
+                .setHour( 12 )
+                .setMinute( 0 )
+                .setTitleText ("Select Alarm Time")
+                .setTheme(R.style.AppTheme_TimePickerTheme)
+                .build();
+
+        picker.show( getActivity().getSupportFragmentManager ( ), "RedBots" ) ;
+        picker.addOnPositiveButtonClickListener( new View.OnClickListener () {
             @Override
-            public void onTimeSet(TimePicker view, int selectedHour, int selectedMinutes) {
-                hours = selectedHour;
-                mins = selectedMinutes;
-                buttonTime.setText(String.format(Locale.getDefault(), "%02d:%02d", hours, mins));
+            public void onClick(View v) {
+                if (picker.getHour() > 12) {
+                    doseTime = String.format("%02d", (picker.getHour()-12)) + ":" + String.format("%02d", picker.getMinute());
+                    doseTime += " PM";
+                } else {
+                    doseTime = String.format("%02d", picker.getHour()) + ":" + String.format("%02d", picker.getMinute());
+                    doseTime += " AM";
+                }
+                buttonTime.setText(doseTime);
             }
-        };
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), R.style.TimePickerTheme, onTimeSetListener, hours, mins, true);
-        timePickerDialog.setTitle("Select Time");
-        timePickerDialog.show();
-
+        }) ;
     }
+
+
 
     private void initializer() {
         editTextDoseName = getView().findViewById(R.id.editTextDoseName);
         buttonTime = getView().findViewById(R.id.buttonTime);
         buttonSubmit = getView().findViewById(R.id.buttonSubmit);
+
     }
+
 
     //helpers
     private void loadFragment(Fragment fragment) {
