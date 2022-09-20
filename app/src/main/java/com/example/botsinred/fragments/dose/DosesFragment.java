@@ -14,20 +14,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.botsinred.R;
-import com.example.botsinred.adapters.DateAdapter;
 import com.example.botsinred.adapters.ScheduleAdapter;
 import com.example.botsinred.database.Data;
-import com.example.botsinred.fragments.ProfileFragment;
+import com.example.botsinred.fragments.userdetails.ProfileFragment;
 import com.example.botsinred.models.CategoryModel;
-import com.example.botsinred.models.DateModel;
 import com.example.botsinred.models.ScheduleModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DosesFragment extends Fragment implements ScheduleAdapter.OnViewItemClickListener {
 

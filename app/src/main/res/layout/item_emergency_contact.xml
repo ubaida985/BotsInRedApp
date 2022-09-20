@@ -9,23 +9,23 @@
     app:cardElevation="@dimen/_3sdp"
     app:cardUseCompatPadding="true">
     <LinearLayout
-        android:id="@+id/linearLayoutEmail"
+        android:id="@+id/linearLayoutEmergencyContact"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="horizontal"
-            android:padding="3dp"
+            android:padding="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
                 android:padding="@dimen/_1sdp"
-                android:src="@drawable/icon_email"
+                android:src="@drawable/icon_phone"
                 android:layout_marginStart="@dimen/_3sdp"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"/>
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"/>
             <TextView
-                android:text="Email"
+                android:text="Emergency Contact"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
@@ -37,11 +37,11 @@
 
         </LinearLayout>
         <TextView
-            android:id="@+id/textViewEmail"
+            android:id="@+id/textViewEmergencyContact"
             android:hint="@string/tap_to_add"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_11ssp"
             android:layout_marginStart="@dimen/_18sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:layout_width="wrap_content"

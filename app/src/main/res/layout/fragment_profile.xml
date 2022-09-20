@@ -7,8 +7,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
+    android:paddingLeft="@dimen/_5sdp"
+    android:paddingRight="@dimen/_5sdp"
     android:background="@color/colorPrimaryDark"
-    tools:context=".fragments.ProfileFragment">
+    tools:context=".fragments.userdetails.ProfileFragment">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -22,6 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <ImageView
+                    android:id="@+id/imageViewBack"
                     android:padding="@dimen/_3sdp"
                     android:layout_alignParentStart="true"
                     android:src="@drawable/icon_back"
@@ -74,7 +77,15 @@
             android:layout_height="wrap_content">
             <include layout="@layout/item_add"/>
             <include layout="@layout/item_info"/>
+            <include layout="@layout/item_emergency_contact"/>
             <include layout="@layout/item_email"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <include layout="@layout/item_blood_group"/>
+                <include layout="@layout/item_weight"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

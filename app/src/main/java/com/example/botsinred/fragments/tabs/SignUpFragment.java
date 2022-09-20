@@ -17,14 +17,16 @@ import android.widget.Toast;
 
 import com.example.botsinred.R;
 import com.example.botsinred.activities.MainActivity;
+import com.example.botsinred.models.UserModel;
 
 public class SignUpFragment extends Fragment {
 
-    private EditText editTextPassword;
     private TextView textViewMistake, textViewNumber;
     private Button buttonLogin;
 
     private String phoneNumber;
+
+    UserModel user;
     public SignUpFragment() {
         // Required empty public constructor
     }
@@ -64,6 +66,9 @@ public class SignUpFragment extends Fragment {
 
     private void setValues() {
         textViewNumber.setText("+91 "+phoneNumber);
+        user.setEmergencyContact(phoneNumber);
+        user.setContact(phoneNumber);
+
     }
 
     private void setListeners() {
@@ -89,9 +94,10 @@ public class SignUpFragment extends Fragment {
 
     private void initialize() {
         textViewNumber = getView().findViewById(R.id.textViewNumber);
-        editTextPassword = getView().findViewById(R.id.editTextPassword);
         buttonLogin = getView().findViewById(R.id.buttonLogin);
         textViewMistake = getView().findViewById(R.id.textViewMistake);
+
+        user = new UserModel();
     }
 
     //helpers

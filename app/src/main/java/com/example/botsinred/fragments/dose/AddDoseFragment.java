@@ -30,6 +30,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -127,6 +128,10 @@ public class AddDoseFragment extends Fragment {
                         pills.put( pillName, Integer.parseInt(pillQty) );
                         categories.add(new CategoryModel(doseCategory, pills));
                         schedules.add(new ScheduleModel(doseTime, doseName, categories, new Date()));
+
+                        Collections.sort(schedules, (o1, o2)
+                                -> o1.getTime().compareTo(
+                                o2.getTime()));
                         data.setSchedule(schedules);
                         // for setting alarm
                         hours = Integer.parseInt(""+doseTime.charAt(0)+doseTime.charAt(1));
@@ -161,6 +166,9 @@ public class AddDoseFragment extends Fragment {
 
                     schedules.add(new ScheduleModel(doseTime, doseName, categories, new Date()));
 
+                    Collections.sort(schedules, (o1, o2)
+                            -> o1.getTime().compareTo(
+                            o2.getTime()));
                     //TODO: what to do if the schedule exists, the category exists, the category exists along with the pill
                     data.setSchedule(schedules);
                     loadFragment(fragment);

@@ -9,12 +9,13 @@
     app:cardElevation="@dimen/_3sdp"
     app:cardUseCompatPadding="true">
     <LinearLayout
+        android:id="@+id/linearLayoutContact"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="horizontal"
-            android:padding="3dp"
+            android:padding="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
@@ -36,7 +37,8 @@
 
         </LinearLayout>
         <TextView
-            android:text="+91 98000000000"
+            android:id="@+id/textViewContact"
+            android:hint="@string/tap_to_add"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="@dimen/_11ssp"

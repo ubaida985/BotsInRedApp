@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/_155sdp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
@@ -9,23 +9,24 @@
     app:cardElevation="@dimen/_3sdp"
     app:cardUseCompatPadding="true">
     <LinearLayout
-        android:id="@+id/linearLayoutEmail"
+        android:id="@+id/linearLayoutWeight"
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_155sdp"
+        android:padding="@dimen/_10sdp"
         android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="horizontal"
             android:padding="3dp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
                 android:padding="@dimen/_1sdp"
-                android:src="@drawable/icon_email"
+                android:src="@drawable/icon_medical"
                 android:layout_marginStart="@dimen/_3sdp"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"/>
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"/>
             <TextView
-                android:text="Email"
+                android:text="Weight"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
@@ -37,13 +38,14 @@
 
         </LinearLayout>
         <TextView
-            android:id="@+id/textViewEmail"
+            android:id="@+id/textViewWeight"
             android:hint="@string/tap_to_add"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_11ssp"
             android:layout_marginStart="@dimen/_18sdp"
             android:layout_marginBottom="@dimen/_10sdp"
+            android:paddingRight="@dimen/_5sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

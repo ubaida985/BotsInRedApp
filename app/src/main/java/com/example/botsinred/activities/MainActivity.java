@@ -18,10 +18,11 @@ import com.example.botsinred.R;
 import com.example.botsinred.database.Data;
 import com.example.botsinred.fragments.CallFragment;
 import com.example.botsinred.fragments.HomeFragment;
-import com.example.botsinred.fragments.ProfileFragment;
+import com.example.botsinred.fragments.userdetails.ProfileFragment;
 import com.example.botsinred.fragments.ShopFragment;
 import com.example.botsinred.fragments.dose.DosesFragment;
 import com.example.botsinred.models.ScheduleModel;
+import com.example.botsinred.models.UserModel;
 import com.example.botsinred.utilities.AlarmReceiver;
 
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     int hours, mins;
     String doseTime;
     ArrayList<ScheduleModel> schedules;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

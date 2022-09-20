@@ -18,17 +18,16 @@ import com.example.botsinred.R;
 import com.example.botsinred.adapters.DateAdapter;
 import com.example.botsinred.adapters.ScheduleAdapter;
 import com.example.botsinred.database.Data;
+import com.example.botsinred.fragments.userdetails.ProfileFragment;
 import com.example.botsinred.models.CategoryModel;
 import com.example.botsinred.models.DateModel;
 import com.example.botsinred.models.ScheduleModel;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 
 public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItemClickListener {
 
@@ -65,6 +64,7 @@ public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItem
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -120,10 +120,16 @@ public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItem
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setUpDoseAdapter() {
 
         //add data to the dose list
         setData();
+        ArrayList<ScheduleModel> schedules = new ArrayList<>();
+        if( this.schedules.size() >= 2 ){
+            schedules.add(this.schedules.get(0));
+            schedules.add(this.schedules.get(1));
+        }
         scheduleAdapter = new ScheduleAdapter(schedules, getActivity(), this);
         recyclerViewDoses.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewDoses.setAdapter(scheduleAdapter);
@@ -132,6 +138,7 @@ public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItem
     private void addDoses() {
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setData() {
         Data data = new Data();
         schedules = data.getSchedule();
@@ -141,6 +148,9 @@ public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItem
         }else{
             return;
         }
+        Collections.sort(schedules, (o1, o2)
+                -> o1.getTime().compareTo(
+                o2.getTime()));
         data.setSchedule(schedules);
     }
 

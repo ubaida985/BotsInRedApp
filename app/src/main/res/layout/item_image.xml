@@ -26,16 +26,18 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textViewName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_18sdp"
                     android:gravity="center"
-                    android:text="Ubaid Ahmad"
+                    android:text="Unnamed"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_16ssp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/textViewDeviceID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_1sdp"
@@ -59,18 +61,23 @@
                     android:weightSum="3">
 
                     <TextView
+                        android:id="@+id/textViewEdit"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Personal Info"
+                        android:text="Edit Info"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
                         android:textStyle="bold" />
+
                     <!--      <View
                         android:background="#79D6D1D1"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
+
+
+
                     <TextView
                         android:layout_weight="1"
                         android:text="Family"
@@ -98,11 +105,13 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
+
     <com.makeramen.roundedimageview.RoundedImageView
-        android:src="@drawable/avatar"
-        android:scaleType="centerCrop"
-        app:riv_corner_radius="@dimen/_80sdp"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/roundedImageViewAvatar"
         android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp"/>
+        android:layout_height="@dimen/_80sdp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/avatar"
+        app:riv_corner_radius="@dimen/_80sdp" />
 </RelativeLayout>
