@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -46,4 +47,24 @@ dependencies {
 
     //bottom bar
     implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
+
+    //recycler view swipe decorator
+    implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.4'
+
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
+    implementation 'com.google.firebase:firebase-firestore:21.1.1'
+
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:6.0.1'
+
+    // FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:6.0.1'
+
+    //Cloud Storage
+    implementation 'com.google.firebase:firebase-storage:19.1.0'
+
 }
+
+// Add the following line to the bottom of the file:
+apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
+

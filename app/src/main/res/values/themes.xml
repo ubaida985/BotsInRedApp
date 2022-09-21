@@ -25,4 +25,14 @@
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorAccent</item>
     </style>
+
+    <style name="AppTheme.Auth" parent="FirebaseUI">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryVariant">@color/error</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorPrimary</item>
+
+        <!-- On API 21+ you can use android:statusBarColor -->
+        <item name="colorPrimaryDark">@color/colorAccent</item>
+    </style>
 </resources>

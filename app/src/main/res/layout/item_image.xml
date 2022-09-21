@@ -71,7 +71,7 @@
                         android:textSize="@dimen/_12ssp"
                         android:textStyle="bold" />
 
-                    <!--      <View
+                        <View
                         android:background="#79D6D1D1"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"/>
@@ -79,14 +79,16 @@
 
 
                     <TextView
+                        android:id="@+id/textViewLogout"
                         android:layout_weight="1"
-                        android:text="Family"
+                        android:text="Logout"
                         android:gravity="center"
                         android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:textColor="#636262"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/error"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
+                   <!--
                     <View
                         android:background="#79D6D1D1"
                         android:layout_width="1dp"

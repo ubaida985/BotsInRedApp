@@ -1,5 +1,7 @@
 package com.example.botsinred.activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -24,11 +26,29 @@ import com.example.botsinred.fragments.dose.DosesFragment;
 import com.example.botsinred.models.ScheduleModel;
 import com.example.botsinred.models.UserModel;
 import com.example.botsinred.utilities.AlarmReceiver;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.data.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener{
 
     //the bottom bar
     MeowBottomNavigation bottomNavigation;
@@ -42,11 +62,18 @@ public class MainActivity extends AppCompatActivity {
     String doseTime;
     ArrayList<ScheduleModel> schedules;
 
+    UserModel user;
+    //for signing in
+    private int AUTHUI_REQUEST_CODE = 10001;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //checking if the user has signed in
+        //authenticate();
 
         //initialize all the class variable
         initializer();
@@ -54,12 +81,45 @@ public class MainActivity extends AppCompatActivity {
         //bottom bar setUP
         setupBottomBar();
 
+        //fetching user data
+        fetchUserData();
+
         //get doses
         getAllDoses();
     }
 
+    private void fetchUserData() {
+        showMessage(user.getUserID());
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        CollectionReference userCollectionReference = database.collection("users");
+        Query userQuery = userCollectionReference
+                .whereEqualTo("userID", user.getUserID());
+
+        userQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if( task.isSuccessful() ){
+                    for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                        UserModel user = queryDocumentSnapshot.toObject(UserModel.class);
+                    }
+                }else{
+
+                }
+            }
+        });
+        showMessage(user.getEmail());
+    }
+
+    public void startLoginActivity(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void initializer() {
         bottomNavigation = findViewById(R.id.bottomNavigation);
+        user = new UserModel();
+        schedules = new ArrayList<>();
     }
 
     private void setupBottomBar() {
@@ -121,16 +181,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getAllDoses(){
-        Data data = new Data();
-        if( data.getSchedule() != null ){
-            schedules = data.getSchedule();
-            for( ScheduleModel schedule : schedules ){
-                doseTime = schedule.getTime();
-                hours = Integer.parseInt(""+doseTime.charAt(0)+doseTime.charAt(1));
-                mins = Integer.parseInt(""+doseTime.charAt(3)+doseTime.charAt(4));
-                setAnAlarm();
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        CollectionReference scheduleCollectionReference = database.collection("schedules");
+        Query schedulesQuery = scheduleCollectionReference
+                .whereEqualTo("userID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        schedulesQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if( task.isSuccessful() ){
+                    for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                        ScheduleModel schedule = queryDocumentSnapshot.toObject(ScheduleModel.class);
+                        schedules.add(schedule);
+                    }
+                }else{
+
+                }
             }
-        }
+        });
+        Collections.sort(schedules, (o1, o2)
+                -> o1.getTime().compareTo(
+                o2.getTime()));
+        Data data = new Data();
+        data.setSchedule(schedules);
 
     }
 
@@ -180,5 +254,53 @@ public class MainActivity extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
     }
+/*
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(this);
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseAuth.getInstance().removeAuthStateListener(this);
+    }
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        if( firebaseAuth.getCurrentUser() == null ){
+            startLoginActivity();
+            return;
+        }
+
+        firebaseAuth.getCurrentUser().getIdToken(true)
+                .addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
+                    @Override
+                    public void onSuccess(GetTokenResult getTokenResult) {
+                        showMessage(getTokenResult.getToken());
+                    }
+                });
+    }
+    */
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseAuth.getInstance().removeAuthStateListener(this);
+    }
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        if (firebaseAuth.getCurrentUser() == null) {
+            startLoginActivity();
+            return;
+        }
+    }
 }

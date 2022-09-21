@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "235069578755",
+    "project_id": "medicine-delivery-4612f",
+    "storage_bucket": "medicine-delivery-4612f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:235069578755:android:c9d59db7831cbde4bd7836",
+        "android_client_info": {
+          "package_name": "com.example.botsinred"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "235069578755-hv2ad0psaots83013q1bipmd0d3ghahp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdxHU0_-HmTbCJsLJ7DzacN8Lj1vDM6h4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "235069578755-hv2ad0psaots83013q1bipmd0d3ghahp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

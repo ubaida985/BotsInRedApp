@@ -1,14 +1,22 @@
 package com.example.botsinred.models;
 
+import com.google.firebase.firestore.IgnoreExtraProperties;
+import com.google.firebase.firestore.ServerTimestamp;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+@IgnoreExtraProperties
 public class ScheduleModel {
+    String userID;
+    String scheduleID;
     String time;
     String name;
     ArrayList<CategoryModel> categories;
-    Date date;
+    @ServerTimestamp Date date;
+    boolean completed = false;
+
 
     /**
      * DOSE
@@ -18,15 +26,40 @@ public class ScheduleModel {
      * list of pills and qty
      */
 
+
+
     public ScheduleModel() {
     }
 
-    public ScheduleModel(String time, String name, ArrayList<CategoryModel> categories, Date date) {
+    public ScheduleModel(String userID, String scheduleID, String time, String name, ArrayList<CategoryModel> categories, Date date) {
         this.time = time;
         this.name = name;
         this.categories = categories;
         this.date = date;
     }
+    public ScheduleModel( String time, String name, ArrayList<CategoryModel> categories, Date date) {
+        this.time = time;
+        this.name = name;
+        this.categories = categories;
+        this.date = date;
+    }
+
+    public String getScheduleID() {
+        return scheduleID;
+    }
+
+    public void setScheduleID(String scheduleID) {
+        this.scheduleID = scheduleID;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
 
     public String getTime() {
         return time;
@@ -59,5 +92,13 @@ public class ScheduleModel {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

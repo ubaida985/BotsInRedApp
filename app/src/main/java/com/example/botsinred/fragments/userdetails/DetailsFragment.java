@@ -25,12 +25,23 @@ import android.widget.Toast;
 
 import com.example.botsinred.R;
 import com.example.botsinred.models.UserModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DetailsFragment extends Fragment {
 
@@ -80,6 +91,7 @@ public class DetailsFragment extends Fragment {
         buttonSubmit.setOnClickListener(v -> {
             addDetails();
             if( validEntries() ){
+
                 loadFragment(new ProfileFragment());
             }
         });
@@ -118,14 +130,47 @@ public class DetailsFragment extends Fragment {
     }
 
     private void addDetails() {
-        user.setImage(encodedImage);
-        user.setName(editTextName.getText().toString());
-        user.setWeight(editTextWeight.getText().toString());
-        user.setBloodGroup(editTextBloodGroup.getText().toString());
-        user.setEmail(editTextEmail.getText().toString());
-        user.setContact(editTextContact.getText().toString());
-        user.setEmergencyContact(editTextEmergencyContact.getText().toString());
-        user.setAddress(editTextAddress.getText().toString());
+        showMessage(this.user.getID());
+        this.user.setImage(encodedImage);
+        this.user.setUsername(editTextEmail.getText().toString());
+        this.user.setName(editTextName.getText().toString());
+        this.user.setWeight(editTextWeight.getText().toString());
+        this.user.setBloodGroup(editTextBloodGroup.getText().toString());
+        this.user.setEmail(editTextEmail.getText().toString());
+        this.user.setContact(editTextContact.getText().toString());
+        this.user.setEmergencyContact(editTextEmergencyContact.getText().toString());
+        this.user.setAddress(editTextAddress.getText().toString());
+
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("username", this.user.getUsername());
+        userData.put("name", this.user.getName());
+        userData.put("image", this.user.getImage());
+        userData.put("address", this.user.getAddress());
+        userData.put("email", this.user.getEmail());
+        userData.put("contact", this.user.getContact());
+        userData.put("emergencyContact", this.user.getEmergencyContact());
+        userData.put("bloodGroup", this.user.getBloodGroup());
+        userData.put("weight", this.user.getWeight());
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+        DocumentReference userRef = database.collection("users")
+                                            .document(this.user.getID());
+        userRef.update(userData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //showMessage("failed to add");
+                    }
+                });
+
+
     }
 
     private void initialize() {

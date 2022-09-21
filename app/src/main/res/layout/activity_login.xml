@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,84 +8,47 @@
     android:background="@color/colorPrimary"
     tools:context=".activities.MainActivity">
 
+  <TextView
+      android:id="@+id/textViewAppName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintVertical_bias="0.2"
+      android:text="Medicine Reminder App"
+      android:textSize="@dimen/_25ssp"
+      />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_200sdp"
-        >
+  <com.makeramen.roundedimageview.RoundedImageView
+      android:id="@+id/roundedImageViewLogo"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/logo"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/textViewAppName"
+      android:scaleType="center"
+      app:riv_corner_radius="@dimen/_10sdp"
+      android:layout_marginTop="@dimen/_60sdp"
 
+      />
 
-        <ImageView
-            android:id="@+id/imageViewBackground"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:src="@drawable/logback"
-            android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0"
-            />
+  <TextView
+      android:id="@+id/textViewLogin"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toBottomOf="@+id/roundedImageViewLogo"
+      app:layout_constraintLeft_toLeftOf="@id/roundedImageViewLogo"
+      app:layout_constraintRight_toRightOf="@id/roundedImageViewLogo"
+      android:layout_marginTop="@dimen/_60sdp"
+      android:text="LOGIN/REGISTER"
+      android:textSize="@dimen/_15ssp"
+      android:textColor="@color/colorAccent"
+      />
 
-        <ImageView
-            android:id="@+id/imageViewLogo"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/logo"
-            app:layout_constraintVertical_bias="0.4"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/imageViewLogo"
-            app:layout_constraintLeft_toLeftOf="@id/imageViewLogo"
-            app:layout_constraintRight_toRightOf="@id/imageViewLogo"
-            app:layout_constraintVertical_bias="0.3"
-            android:text="Welcome to Bots in Red"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            android:textSize="@dimen/_14ssp"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--
-    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/logInNavigation"
-        app:mbn_circleColor="@color/colorPrimary"
-        app:mbn_selectedIconColor="@color/colorAccent"
-        app:mbn_countTextColor="@color/colorPrimary"
-        app:mbn_countBackgroundColor="@color/colorAccent"
-        app:mbn_defaultIconColor="@color/colorPrimary"
-        app:mbn_backgroundBottomColor="@color/colorAccent"
-        />
--->
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabGoogle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/google"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/_30sdp" />
-
-</LinearLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

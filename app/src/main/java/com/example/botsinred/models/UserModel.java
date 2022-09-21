@@ -1,11 +1,30 @@
 package com.example.botsinred.models;
 
+import com.google.firebase.firestore.IgnoreExtraProperties;
+
+import java.util.ArrayList;
+
+@IgnoreExtraProperties
 public class UserModel {
-    static String image = "", username = "", name = "", address = "", contact = "", emergencyContact = "", email = "", bloodGroup = "", weight = "";
+    public static String id="", userID="",  image = "", username = "", name = "", address = "", contact = "", emergencyContact = "", email = "", bloodGroup = "", weight = "";
 
     public UserModel() {
     }
 
+
+    public UserModel(String id, String userID, String image, String username, String name, String address, String contact, String emergencyContact, String email, String bloodGroup, String weight) {
+        this.id = id;
+        this.userID = userID;
+        this.image = image;
+        this.username = username;
+        this.name = name;
+        this.address = address;
+        this.contact = contact;
+        this.emergencyContact = emergencyContact;
+        this.email = email;
+        this.bloodGroup = bloodGroup;
+        this.weight = weight;
+    }
     public UserModel(String image, String username, String name, String address, String contact, String emergencyContact, String email, String bloodGroup, String weight) {
         this.image = image;
         this.username = username;
@@ -17,13 +36,28 @@ public class UserModel {
         this.bloodGroup = bloodGroup;
         this.weight = weight;
     }
+    public String getID() {
+        return id;
+    }
 
-    public static String getImage() {
+    public void setID(String id) {
+        this.id = id;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getImage() {
         return image;
     }
 
-    public static void setImage(String image) {
-        UserModel.image = image;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getUsername() {

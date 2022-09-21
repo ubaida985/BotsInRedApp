@@ -84,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|bottom"
                     android:src="@drawable/icon_add"
+                    app:backgroundTint="@color/colorAccent"
                     android:contentDescription="Add Dose"
                     android:layout_margin="16dp" />
             </FrameLayout>

@@ -17,16 +17,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.botsinred.R;
+import com.example.botsinred.activities.LoginActivity;
+import com.example.botsinred.database.Data;
 import com.example.botsinred.fragments.HomeFragment;
 import com.example.botsinred.models.UserModel;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GetTokenResult;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 public class ProfileFragment extends Fragment {
 
     private LinearLayout linearLayoutAddress, linearLayoutContact, linearLayoutEmergencyContact, linearLayoutEmail, linearLayoutBloodGroup, linearLayoutWeight;
-    private TextView textViewName, textViewDeviceID, textViewAddress, textViewContact, textViewEmergencyContact, textViewEmail, textViewBloodGroup, textViewWeight, textViewEdit;
+    private TextView textViewLogout, textViewName, textViewDeviceID, textViewAddress, textViewContact, textViewEmergencyContact, textViewEmail, textViewBloodGroup, textViewWeight, textViewEdit;
     private ImageView imageViewBack;
     private RoundedImageView roundedImageViewAvatar;
 
@@ -89,6 +98,23 @@ public class ProfileFragment extends Fragment {
                 loadFragment(new HomeFragment());
             }
         });
+        textViewLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AuthUI.getInstance().signOut(getActivity())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if( task.isSuccessful() ){
+                                    startLoginActivity();
+                                }else{
+                                    showMessage(task.getException().toString());
+                                }
+                            }
+                        });
+            }
+
+        });
     }
 
     private void initialize() {
@@ -108,6 +134,7 @@ public class ProfileFragment extends Fragment {
         textViewBloodGroup = getView().findViewById(R.id.textViewBloodGroup);
         textViewWeight = getView().findViewById(R.id.textViewWeight);
         textViewEdit = getView().findViewById(R.id.textViewEdit);
+        textViewLogout = getView().findViewById(R.id.textViewLogout);
 
         imageViewBack = getView().findViewById(R.id.imageViewBack);
         roundedImageViewAvatar = getView().findViewById(R.id.roundedImageViewAvatar);
@@ -122,4 +149,14 @@ public class ProfileFragment extends Fragment {
                 .commit();
     }
 
+    private void showMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public void startLoginActivity(){
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
 }

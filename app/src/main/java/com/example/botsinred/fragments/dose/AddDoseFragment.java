@@ -1,6 +1,7 @@
 package com.example.botsinred.fragments.dose;
 
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -26,6 +27,13 @@ import com.example.botsinred.database.Data;
 import com.example.botsinred.models.CategoryModel;
 import com.example.botsinred.models.ScheduleModel;
 import com.example.botsinred.utilities.AlarmReceiver;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -44,6 +52,10 @@ public class AddDoseFragment extends Fragment {
     private Button buttonAddPill;
 
     String doseName, doseTime, doseCategory, pillName, pillQty;
+    ArrayList<ScheduleModel> schedules;
+    ArrayList<CategoryModel> categories;
+    HashMap<String, Integer> pills;
+    FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
 
 
     // for setting alarms
@@ -107,9 +119,9 @@ public class AddDoseFragment extends Fragment {
                 if( validateEntries() ){
                     Fragment fragment = new DosesFragment();
                     Data data = new Data();
-                    ArrayList<ScheduleModel> schedules = data.getSchedule();
-                    ArrayList<CategoryModel> categories = null;
-                    HashMap<String, Integer> pills = null;
+                    schedules = data.getSchedule();
+                    categories = null;
+                    pills = null;
 
 
                     //handles if another dose is being added to the same time
@@ -127,11 +139,6 @@ public class AddDoseFragment extends Fragment {
                         pills = new HashMap<>();
                         pills.put( pillName, Integer.parseInt(pillQty) );
                         categories.add(new CategoryModel(doseCategory, pills));
-                        schedules.add(new ScheduleModel(doseTime, doseName, categories, new Date()));
-
-                        Collections.sort(schedules, (o1, o2)
-                                -> o1.getTime().compareTo(
-                                o2.getTime()));
                         data.setSchedule(schedules);
                         // for setting alarm
                         hours = Integer.parseInt(""+doseTime.charAt(0)+doseTime.charAt(1));
@@ -139,10 +146,15 @@ public class AddDoseFragment extends Fragment {
                         if( doseTime.charAt(6) == 'P' ){
                             hours += 12;
                         }
-                        setAnAlarm();
+                        addSchedule();
+                        Collections.sort(schedules, (o1, o2)
+                                -> o1.getTime().compareTo(
+                                o2.getTime()));
+                        //  setAnAlarm();
                         loadFragment(fragment);
                         return;
                     }
+                    deleteSchedule(schedules.get(i).getScheduleID());
                     schedules.remove(i);
 
                     //there's a schedule and hence a category exists at the given time, so we fetch the category list
@@ -158,13 +170,12 @@ public class AddDoseFragment extends Fragment {
                         pills = new HashMap<>();
                         pills.put( pillName, Integer.parseInt(pillQty) );
                         categories.add(new CategoryModel(doseCategory, pills));
-                        schedules.add(new ScheduleModel(doseTime, doseName, categories, new Date()));
-                        data.setSchedule(schedules);
+                        addSchedule();
                         loadFragment(fragment);
                         return;
                     }
 
-                    schedules.add(new ScheduleModel(doseTime, doseName, categories, new Date()));
+                    addSchedule();
 
                     Collections.sort(schedules, (o1, o2)
                             -> o1.getTime().compareTo(
@@ -177,6 +188,47 @@ public class AddDoseFragment extends Fragment {
         });
     }
 
+    private void deleteSchedule(String scheduleID) {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference scheduleRef = database.collection("schedules")
+                .document(scheduleID);
+        scheduleRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if( task.isSuccessful() ){
+
+                }else{
+
+                }
+            }
+        });
+    }
+
+    private void addSchedule() {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference scheduleRef = database.collection("schedules")
+                .document();
+        ScheduleModel schedule = new ScheduleModel();
+        schedule.setUserID(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        schedule.setScheduleID(scheduleRef.getId());
+        schedule.setTime(doseTime);
+        schedule.setName(doseName);
+        schedule.setCategories(categories);
+        schedule.setCompleted(false);
+
+        scheduleRef.set(schedule).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if( task.isSuccessful() ){
+                    schedules.add(schedule);
+                    //showMessage("Schedule Inserted");
+                }else{
+                    //showMessage("Schedule not Inserted");
+                }
+            }
+        });
+
+    }
 
     private boolean validateEntries() {
         pillName = editTextPillName.getText().toString();
@@ -222,7 +274,6 @@ public class AddDoseFragment extends Fragment {
     private void showMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
-
 
     //alarm functions
     private void setAnAlarm() {
@@ -271,6 +322,5 @@ public class AddDoseFragment extends Fragment {
             notificationManager.createNotificationChannel(channel);
         }
     }
-
 
 }
