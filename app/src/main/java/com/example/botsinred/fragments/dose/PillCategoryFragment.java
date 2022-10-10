@@ -27,7 +27,7 @@ public class PillCategoryFragment extends Fragment implements CategoryAdapter.On
     private RecyclerView recyclerViewCategories;
     private CategoryAdapter adapter;
 
-    String doseName, doseTime, doseCategory;
+    String doseName, doseTime, doseDate, doseCategory;
     public PillCategoryFragment() {
         // Required empty public constructor
     }
@@ -43,6 +43,7 @@ public class PillCategoryFragment extends Fragment implements CategoryAdapter.On
 
         doseName = getArguments().getString("doseName");
         doseTime = getArguments().getString("doseTime");
+        doseDate = getArguments().getString("doseDate");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pill_category, container, false);
     }
@@ -67,12 +68,12 @@ public class PillCategoryFragment extends Fragment implements CategoryAdapter.On
     }
 
     private void setUpCategories() {
-        categories.add(new CategoryModel( "Liver", new HashMap<>()));
-        categories.add(new CategoryModel( "Stomach" , new HashMap<>()));
-        categories.add(new CategoryModel( "Headache" , new HashMap<>()));
-        categories.add(new CategoryModel( "Diabetes" , new HashMap<>()));
-        categories.add(new CategoryModel( "CVD" , new HashMap<>()));
-        categories.add(new CategoryModel( "Stone" , new HashMap<>()));
+        categories.add(new CategoryModel( "Drawer 1", new HashMap<>()));
+        categories.add(new CategoryModel( "Drawer 2" , new HashMap<>()));
+        categories.add(new CategoryModel( "Drawer 3" , new HashMap<>()));
+        categories.add(new CategoryModel( "Drawer 4" , new HashMap<>()));
+        categories.add(new CategoryModel( "Drawer 5" , new HashMap<>()));
+        categories.add(new CategoryModel( "Drawer 6" , new HashMap<>()));
     }
 
     private void initializer() {
@@ -86,6 +87,7 @@ public class PillCategoryFragment extends Fragment implements CategoryAdapter.On
         Bundle data = new Bundle();
         data.putString("doseName", doseName);
         data.putString("doseTime", doseTime);
+        data.putString("doseDate", doseDate);
         data.putString("doseCategory", categories.get(position).getCategoryName());
         fragment.setArguments(data);
         loadFragment(fragment);

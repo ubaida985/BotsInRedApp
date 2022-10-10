@@ -114,14 +114,11 @@ public class DosesFragment extends Fragment implements ScheduleAdapter.OnViewIte
     private void setUpDoseAdapter() {
         Data data = new Data();
         schedules = data.getSchedule();
-
         scheduleAdapter = new ScheduleAdapter(schedules, getActivity(), this);
         recyclerViewDoses.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewDoses.setAdapter(scheduleAdapter);
     }
 
-    private void addDoses() {
-    }
 
     private void initializer() {
         recyclerViewDoses = getView().findViewById(R.id.recyclerviewDoses);

@@ -14,6 +14,7 @@ public class ScheduleModel {
     String time;
     String name;
     ArrayList<CategoryModel> categories;
+    String doseDate;
     @ServerTimestamp Date date;
     boolean completed = false;
 
@@ -31,17 +32,28 @@ public class ScheduleModel {
     public ScheduleModel() {
     }
 
-    public ScheduleModel(String userID, String scheduleID, String time, String name, ArrayList<CategoryModel> categories, Date date) {
+    public ScheduleModel(String userID, String scheduleID, String time, String name, ArrayList<CategoryModel> categories, Date date, String doseDate) {
         this.time = time;
         this.name = name;
         this.categories = categories;
         this.date = date;
+        this.doseDate = doseDate;
     }
-    public ScheduleModel( String time, String name, ArrayList<CategoryModel> categories, Date date) {
+    public ScheduleModel( String time, String name, ArrayList<CategoryModel> categories, Date date, String doseDate) {
         this.time = time;
         this.name = name;
         this.categories = categories;
         this.date = date;
+        this.doseDate = doseDate;
+    }
+
+
+    public String getDoseDate() {
+        return doseDate;
+    }
+
+    public void setDoseDate(String doseDate) {
+        this.doseDate = doseDate;
     }
 
     public String getScheduleID() {
@@ -100,5 +112,18 @@ public class ScheduleModel {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    @Override
+    public String toString() {
+        return "ScheduleModel{" +
+                "userID='" + userID + '\'' +
+                ", scheduleID='" + scheduleID + '\'' +
+                ", time='" + time + '\'' +
+                ", name='" + name + '\'' +
+                ", categories=" + categories +
+                ", date=" + date +
+                ", completed=" + completed +
+                '}';
     }
 }

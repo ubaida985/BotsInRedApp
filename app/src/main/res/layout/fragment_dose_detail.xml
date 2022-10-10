@@ -29,7 +29,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_margin="@dimen/_20sdp"
-        android:text="Default Dose"
+        android:hint="Enter dose name"
         android:background="@drawable/round_edit_bg"
         android:paddingLeft="@dimen/_30sdp"
         android:paddingRight="@dimen/_30sdp"
@@ -50,7 +50,19 @@
         android:text="Select Time"
         android:textSize="@dimen/_14ssp"
         />
-
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonTime"
+        android:layout_margin="@dimen/_20sdp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="Select Date"
+        android:textSize="@dimen/_14ssp"
+        />
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonSubmit"
         android:layout_width="0dp"
@@ -58,7 +70,7 @@
         android:background="@drawable/round_button_bg"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonTime"
+        app:layout_constraintTop_toBottomOf="@id/buttonDate"
         android:layout_margin="@dimen/_20sdp"
         android:text="Let's Go"
         android:textColor="@color/colorPrimaryDark"

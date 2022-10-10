@@ -19,4 +19,9 @@
         <item name="cornerSize">50%</item>
 
     </style>
+    <style name="MaterialCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <!-- just override the colors used in the default style -->
+        <item name="colorOnPrimary">@color/dark</item>
+        <item name="colorPrimary">@color/colorAccent</item>
+    </style>
 </resources>

@@ -84,12 +84,10 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
         //fetching user data
         fetchUserData();
 
-        //get doses
-        getAllDoses();
     }
 
     private void fetchUserData() {
-        showMessage(user.getUserID());
+        //showMessage(user.getUserID());
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         CollectionReference userCollectionReference = database.collection("users");
         Query userQuery = userCollectionReference
@@ -100,14 +98,42 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if( task.isSuccessful() ){
                     for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
-                        UserModel user = queryDocumentSnapshot.toObject(UserModel.class);
+                        user = queryDocumentSnapshot.toObject(UserModel.class);
+                        //showMessage("Email " + user.getEmail());
+
+                        System.out.println("Email " +  user.getEmail());
+                    }
+
+                }else{
+
+                }
+            }
+        });
+
+        fetchSchedule();
+    }
+
+    private void fetchSchedule() {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        CollectionReference userCollectionReference = database.collection("schedules");
+        Query userQuery = userCollectionReference
+                .whereEqualTo("userID", user.getUserID());
+
+        userQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if( task.isSuccessful() ){
+                    for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                        ScheduleModel scheduleModel = queryDocumentSnapshot.toObject(ScheduleModel.class);
+                        schedules.add(scheduleModel);
                     }
                 }else{
 
                 }
             }
         });
-        showMessage(user.getEmail());
+        Data data = new Data();
+        data.setSchedule(schedules);
     }
 
     public void startLoginActivity(){
@@ -177,16 +203,14 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
     }
 
     private void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     public void getAllDoses(){
-
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         CollectionReference scheduleCollectionReference = database.collection("schedules");
         Query schedulesQuery = scheduleCollectionReference
                 .whereEqualTo("userID", FirebaseAuth.getInstance().getCurrentUser().getUid());
-
         schedulesQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -196,7 +220,6 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                         schedules.add(schedule);
                     }
                 }else{
-
                 }
             }
         });
@@ -204,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                 -> o1.getTime().compareTo(
                 o2.getTime()));
         Data data = new Data();
+        showMessage(schedules.toString());
         data.setSchedule(schedules);
 
     }

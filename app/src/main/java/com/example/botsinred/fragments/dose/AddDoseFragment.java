@@ -51,7 +51,7 @@ public class AddDoseFragment extends Fragment {
     private RoundedImageView roundedImageViewDecrease, roundedImageViewIncrease;
     private Button buttonAddPill;
 
-    String doseName, doseTime, doseCategory, pillName, pillQty;
+    String doseName, doseTime, doseDate, doseCategory, pillName, pillQty;
     ArrayList<ScheduleModel> schedules;
     ArrayList<CategoryModel> categories;
     HashMap<String, Integer> pills;
@@ -80,6 +80,7 @@ public class AddDoseFragment extends Fragment {
 
         doseName = getArguments().getString("doseName");
         doseTime = getArguments().getString("doseTime");
+        doseDate = getArguments().getString("doseDate");
         doseCategory = getArguments().getString("doseCategory");
 
         // Inflate the layout for this fragment
@@ -151,6 +152,7 @@ public class AddDoseFragment extends Fragment {
                                 -> o1.getTime().compareTo(
                                 o2.getTime()));
                         //  setAnAlarm();
+                        data.setSchedule(schedules);
                         loadFragment(fragment);
                         return;
                     }
@@ -171,6 +173,7 @@ public class AddDoseFragment extends Fragment {
                         pills.put( pillName, Integer.parseInt(pillQty) );
                         categories.add(new CategoryModel(doseCategory, pills));
                         addSchedule();
+                        data.setSchedule(schedules);
                         loadFragment(fragment);
                         return;
                     }
@@ -213,6 +216,7 @@ public class AddDoseFragment extends Fragment {
         schedule.setScheduleID(scheduleRef.getId());
         schedule.setTime(doseTime);
         schedule.setName(doseName);
+        schedule.setDoseDate(doseDate);
         schedule.setCategories(categories);
         schedule.setCompleted(false);
 
@@ -221,6 +225,8 @@ public class AddDoseFragment extends Fragment {
             public void onComplete(@NonNull Task<Void> task) {
                 if( task.isSuccessful() ){
                     schedules.add(schedule);
+                    Data data = new Data();
+                    data.setSchedule(schedules);
                     //showMessage("Schedule Inserted");
                 }else{
                     //showMessage("Schedule not Inserted");

@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         //deconstruct all models
-        deconstruct();
+        //deconstruct();
 
         //add Listeners
         addListeners();
@@ -59,7 +59,9 @@ public class LoginActivity extends AppCompatActivity {
         //setup top menu bar
         //setupTopBar();
 
+        UserModel user = new UserModel();
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            user.setUserID(FirebaseAuth.getInstance().getCurrentUser().getUid());
             startActivity(new Intent(this, MainActivity.class));
             this.finish();
         }
@@ -113,12 +115,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == AUTHUI_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 // We have signed in the user or we have a new user
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 UserModel userModel = new UserModel();
                 userModel.setUserID(user.getUid());
+
                 //Checking for User (New/Old)
                 if (user.getMetadata().getCreationTimestamp() == user.getMetadata().getLastSignInTimestamp()) {
                     //new user
@@ -127,7 +131,6 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     showMessage("OLD USER");
                 }
-
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 this.finish();
@@ -141,7 +144,9 @@ public class LoginActivity extends AppCompatActivity {
                     showMessage("onActivityResult: " + response.getError());
                 }
             }
+
         }
+
     }
 
     private void addUser() {
@@ -160,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
         user.setContact("");
         user.setWeight("");
         user.setBloodGroup("");
-        showMessage("useradded?");
+        showMessage("useradded!");
         userRef.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

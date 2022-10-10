@@ -129,6 +129,8 @@ public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItem
         if( this.schedules.size() >= 2 ){
             schedules.add(this.schedules.get(0));
             schedules.add(this.schedules.get(1));
+        }else{
+            schedules = this.schedules;
         }
         scheduleAdapter = new ScheduleAdapter(schedules, getActivity(), this);
         recyclerViewDoses.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -144,13 +146,12 @@ public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItem
         schedules = data.getSchedule();
         if( schedules == null ){
             schedules = new ArrayList<>();
-            addDoses();
+            //addDoses();
         }else{
-            return;
+            Collections.sort(schedules, (o1, o2)
+                    -> o1.getTime().compareTo(
+                    o2.getTime()));
         }
-        Collections.sort(schedules, (o1, o2)
-                -> o1.getTime().compareTo(
-                o2.getTime()));
         data.setSchedule(schedules);
     }
 

@@ -1,5 +1,6 @@
 package com.example.botsinred.fragments.dose;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -26,6 +27,8 @@ import android.widget.Toast;
 import com.example.botsinred.R;
 import com.example.botsinred.models.ScheduleModel;
 import com.example.botsinred.utilities.AlarmReceiver;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -37,11 +40,11 @@ import java.util.Locale;
 public class DoseDetailFragment extends Fragment {
 
     private EditText editTextDoseName;
-    private Button buttonTime, buttonSubmit;
+    private Button buttonTime, buttonSubmit, buttonDate;
 
-    String doseName, doseTime;
+    String doseName, doseTime, doseDate;
     MaterialTimePicker picker;
-
+    MaterialDatePicker materialDatePicker;
     public DoseDetailFragment() {
         // Required empty public constructor
     }
@@ -78,6 +81,12 @@ public class DoseDetailFragment extends Fragment {
                 pickTime();
             }
         });
+        buttonDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickDate();
+            }
+        });
 
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,12 +96,15 @@ public class DoseDetailFragment extends Fragment {
                     Bundle data = new Bundle();
                     data.putString("doseName", doseName);
                     data.putString("doseTime", doseTime);
+                    data.putString("doseDate", doseDate);
                     fragment.setArguments(data);
                     loadFragment(fragment);
                 }
             }
         });
     }
+
+
 
     private boolean validateEntries() {
         doseName = editTextDoseName.getText().toString();
@@ -106,6 +118,41 @@ public class DoseDetailFragment extends Fragment {
             return false;
         }
         return true;
+    }
+
+    private void pickDate() {
+        MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker()
+                .setTheme(R.style.MaterialCalendarTheme);
+
+        // now define the properties of the
+        // materialDateBuilder that is title text as SELECT A DATE
+        materialDateBuilder.setTitleText("SELECT A DATE");
+
+        // now create the instance of the material date
+        // picker
+        materialDatePicker = materialDateBuilder.build();
+
+        // handle select date button which opens the
+        // material design date picker
+        materialDatePicker.show(getActivity().getSupportFragmentManager(), "MATERIAL_DATE_PICKER");
+        // now handle the positive button click from the
+        // material design date picker
+        materialDatePicker.addOnPositiveButtonClickListener(
+                new MaterialPickerOnPositiveButtonClickListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onPositiveButtonClick(Object selection) {
+
+                        // if the user clicks on the positive
+                        // button that is ok button update the
+                        // selected date
+                        doseDate = materialDatePicker.getHeaderText();
+                        buttonDate.setText(doseDate);
+                        // in the above statement, getHeaderText
+                        // is the selected date preview from the
+                        // dialog
+                    }
+                });
     }
 
     private void pickTime() {
@@ -138,6 +185,7 @@ public class DoseDetailFragment extends Fragment {
     private void initializer() {
         editTextDoseName = getView().findViewById(R.id.editTextDoseName);
         buttonTime = getView().findViewById(R.id.buttonTime);
+        buttonDate = getView().findViewById(R.id.buttonDate);
         buttonSubmit = getView().findViewById(R.id.buttonSubmit);
 
     }

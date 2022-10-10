@@ -71,7 +71,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getValues() {
-        if( !user.getImage().equals("") ){
+        if( user.getImage() != null ){
             byte[] bytes = Base64.decode(user.getImage(), Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             roundedImageViewAvatar.setImageBitmap(bitmap);

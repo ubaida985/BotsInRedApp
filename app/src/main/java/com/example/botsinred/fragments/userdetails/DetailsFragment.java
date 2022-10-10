@@ -101,7 +101,7 @@ public class DetailsFragment extends Fragment {
     }
 
     private boolean validEntries() {
-        if( encodedImage == null     ){
+        if( encodedImage == null ){
             showMessage("Please select a image");
             return false;
         }else if( editTextName.getText().toString().equals("") ){
@@ -202,9 +202,14 @@ public class DetailsFragment extends Fragment {
         editTextEmergencyContact.setText(user.getEmergencyContact());
         editTextEmail.setText(user.getEmail());
         editTextBloodGroup.setText(user.getBloodGroup());
-        byte[] bytes = Base64.decode(user.getImage(), Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        roundedImageViewProfile.setImageBitmap(bitmap);
+        if(  user.getImage() != null  ){
+            byte[] bytes = Base64.decode(user.getImage(), Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            roundedImageViewProfile.setImageBitmap(bitmap);
+            textViewAddImage.setVisibility(View.GONE);
+            encodedImage = encodeImage(bitmap);
+            user.setImage(encodedImage);
+        }
     }
 
     //helpers
@@ -229,6 +234,7 @@ public class DetailsFragment extends Fragment {
                             roundedImageViewProfile.setImageBitmap(bitmap);
                             textViewAddImage.setVisibility(View.GONE);
                             encodedImage = encodeImage(bitmap);
+                            user.setImage(encodedImage);
                         }catch (FileNotFoundException e){
                             e.printStackTrace();
                         }
