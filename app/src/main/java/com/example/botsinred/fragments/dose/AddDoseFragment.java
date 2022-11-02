@@ -49,7 +49,7 @@ public class AddDoseFragment extends Fragment {
     private EditText editTextPillName;
     private TextView textViewPillQty;
     private RoundedImageView roundedImageViewDecrease, roundedImageViewIncrease;
-    private Button buttonAddPill;
+    private Button buttonAddPill, buttonAddMorePills;
 
     String doseName, doseTime, doseDate, doseCategory, pillName, pillQty;
     ArrayList<ScheduleModel> schedules;
@@ -114,81 +114,96 @@ public class AddDoseFragment extends Fragment {
                 setPills( pills - 1 );
             }
         });
+        buttonAddMorePills.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDose();
+                Fragment fragment = new PillCategoryFragment();
+                Bundle data = new Bundle();
+                data.putString("doseName", doseName);
+                data.putString("doseTime", doseTime);
+                data.putString("doseDate", doseDate);
+                fragment.setArguments(data);
+                loadFragment(fragment);
+            }
+        });
         buttonAddPill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( validateEntries() ){
-                    Fragment fragment = new DosesFragment();
-                    Data data = new Data();
-                    schedules = data.getSchedule();
-                    categories = null;
-                    pills = null;
-
-
-                    //handles if another dose is being added to the same time
-                    int i = 0;
-                    for( ScheduleModel schedule : schedules ){
-                        if( schedule.getTime().equals(doseTime) ){
-                            categories = schedule.getCategories();
-                            break;
-                        }
-                        ++ i;
-                    }
-                    //no schedule at given time
-                    if( i == schedules.size() ){
-                        categories = new ArrayList<>();
-                        pills = new HashMap<>();
-                        pills.put( pillName, Integer.parseInt(pillQty) );
-                        categories.add(new CategoryModel(doseCategory, pills));
-                        data.setSchedule(schedules);
-                        // for setting alarm
-                        hours = Integer.parseInt(""+doseTime.charAt(0)+doseTime.charAt(1));
-                        mins = Integer.parseInt(""+doseTime.charAt(3)+doseTime.charAt(4));
-                        if( doseTime.charAt(6) == 'P' ){
-                            hours += 12;
-                        }
-                        addSchedule();
-                        Collections.sort(schedules, (o1, o2)
-                                -> o1.getTime().compareTo(
-                                o2.getTime()));
-                        //  setAnAlarm();
-                        data.setSchedule(schedules);
-                        loadFragment(fragment);
-                        return;
-                    }
-                    deleteSchedule(schedules.get(i).getScheduleID());
-                    schedules.remove(i);
-
-                    //there's a schedule and hence a category exists at the given time, so we fetch the category list
-                    boolean catExist = false;
-                    for( CategoryModel category : categories ){
-                        if( category.getCategoryName().equals(doseCategory) ){
-                            pills = category.getPills();
-                            catExist = true;
-                            break;
-                        }
-                    }
-                    if( !catExist ){
-                        pills = new HashMap<>();
-                        pills.put( pillName, Integer.parseInt(pillQty) );
-                        categories.add(new CategoryModel(doseCategory, pills));
-                        addSchedule();
-                        data.setSchedule(schedules);
-                        loadFragment(fragment);
-                        return;
-                    }
-
-                    addSchedule();
-
-                    Collections.sort(schedules, (o1, o2)
-                            -> o1.getTime().compareTo(
-                            o2.getTime()));
-                    //TODO: what to do if the schedule exists, the category exists, the category exists along with the pill
-                    data.setSchedule(schedules);
-                    loadFragment(fragment);
-                }
+                addDose();
+                Fragment fragment = new DosesFragment();
+                loadFragment(fragment);
             }
         });
+    }
+
+    private void addDose() {
+        if( validateEntries() ){
+            Data data = new Data();
+            schedules = data.getSchedule();
+            categories = null;
+            pills = null;
+
+
+            //handles if another dose is being added to the same time
+            int i = 0;
+            for( ScheduleModel schedule : schedules ){
+                if( schedule.getTime().equals(doseTime) ){
+                    categories = schedule.getCategories();
+                    break;
+                }
+                ++ i;
+            }
+            //no schedule at given time
+            if( i == schedules.size() ){
+                categories = new ArrayList<>();
+                pills = new HashMap<>();
+                pills.put( pillName, Integer.parseInt(pillQty) );
+                categories.add(new CategoryModel(doseCategory, pills));
+                data.setSchedule(schedules);
+                // for setting alarm
+                hours = Integer.parseInt(""+doseTime.charAt(0)+doseTime.charAt(1));
+                mins = Integer.parseInt(""+doseTime.charAt(3)+doseTime.charAt(4));
+                if( doseTime.charAt(6) == 'P' ){
+                    hours += 12;
+                }
+                addSchedule();
+                Collections.sort(schedules, (o1, o2)
+                        -> o1.getTime().compareTo(
+                        o2.getTime()));
+                //  setAnAlarm();
+                data.setSchedule(schedules);
+                return;
+            }
+            deleteSchedule(schedules.get(i).getScheduleID());
+            schedules.remove(i);
+
+            //there's a schedule and hence a category exists at the given time, so we fetch the category list
+            boolean catExist = false;
+            for( CategoryModel category : categories ){
+                if( category.getCategoryName().equals(doseCategory) ){
+                    pills = category.getPills();
+                    catExist = true;
+                    break;
+                }
+            }
+            if( !catExist ){
+                pills = new HashMap<>();
+                pills.put( pillName, Integer.parseInt(pillQty) );
+                categories.add(new CategoryModel(doseCategory, pills));
+                addSchedule();
+                data.setSchedule(schedules);
+                return;
+            }
+
+            addSchedule();
+
+            Collections.sort(schedules, (o1, o2)
+                    -> o1.getTime().compareTo(
+                    o2.getTime()));
+            //TODO: what to do if the schedule exists, the category exists, the category exists along with the pill
+            data.setSchedule(schedules);
+        }
     }
 
     private void deleteSchedule(String scheduleID) {
@@ -240,11 +255,11 @@ public class AddDoseFragment extends Fragment {
         pillName = editTextPillName.getText().toString();
         pillQty = textViewPillQty.getText().toString();
         if( pillName.length() == 0 ){
-            showMessage("Please enter a valid pill name");
+           // showMessage("Please enter a valid pill name");
             return false;
         }
         if( pillQty.equals("0") ){
-            showMessage("Pill quantity must be greater than 0");
+           // showMessage("Pill quantity must be greater than 0");
             return false;
         }
         return true;
@@ -256,6 +271,7 @@ public class AddDoseFragment extends Fragment {
         roundedImageViewDecrease = getView().findViewById(R.id.roundedImageViewDecrease);
         roundedImageViewIncrease = getView().findViewById(R.id.roundedImageViewIncrease);
         buttonAddPill = getView().findViewById(R.id.buttonAddPill);
+        buttonAddMorePills = getView().findViewById(R.id.buttonAddMore);
         pendingIntents = new ArrayList<>();
     }
 
@@ -292,7 +308,7 @@ public class AddDoseFragment extends Fragment {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         setAlarm();
-        showMessage(doseTime);
+     //   showMessage(doseTime);
     }
 
     private void setAlarm ( ) {

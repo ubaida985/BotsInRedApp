@@ -179,6 +179,11 @@ public class HomeFragment extends Fragment implements ScheduleAdapter.OnViewItem
 
     }
 
+    @Override
+    public void onItemLongClick(int position) {
+
+    }
+
 
     private void showMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();

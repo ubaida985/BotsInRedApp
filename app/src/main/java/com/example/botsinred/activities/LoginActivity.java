@@ -37,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private int AUTHUI_REQUEST_CODE = 10001;
     private TextView textViewLogin;
+    private Data data = new Data();
+    private UserModel user = new UserModel();
 
 
     @Override
@@ -58,12 +60,22 @@ public class LoginActivity extends AppCompatActivity {
 
         //setup top menu bar
         //setupTopBar();
-
-        UserModel user = new UserModel();
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+       if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             user.setUserID(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            startActivity(new Intent(this, MainActivity.class));
-            this.finish();
+            data.setUser(user);
+          // showMessage("UserID: " + user.getUserID());
+            if( user.getUserID().equals("pr02PY2fuxTpMNxg9G0FbpzA4oD3") ){
+                startActivity(new Intent(this, AdminActivity.class));
+                this.finish();
+            }else if( user.getUserID().equals("Cs4uubPXYTcPpAK6qBYap0o8dX12") ){
+                startActivity(new Intent(this, DoctorActivity.class));
+                this.finish();
+            }else{
+                startActivity(new Intent(this, MainActivity.class));
+                this.finish();
+            }
+        }else{
+           // showMessage("Not signed In");
         }
 
     }
@@ -120,28 +132,35 @@ public class LoginActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // We have signed in the user or we have a new user
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                UserModel userModel = new UserModel();
-                userModel.setUserID(user.getUid());
-
-                //Checking for User (New/Old)
-                if (user.getMetadata().getCreationTimestamp() == user.getMetadata().getLastSignInTimestamp()) {
-                    //new user
-                    showMessage("NEW USER");
-                    addUser();
-                } else {
-                    showMessage("OLD USER");
+                this.user.setUserID(user.getUid());
+                this.data.setUser(this.user);
+                if( FirebaseAuth.getInstance().getCurrentUser().getUid().equals("pr02PY2fuxTpMNxg9G0FbpzA4oD3") ){
+                    Intent intent = new Intent(this, AdminActivity.class);
+                    startActivity(intent);
+                    this.finish();
+                }else if( FirebaseAuth.getInstance().getCurrentUser().getUid().equals("Cs4uubPXYTcPpAK6qBYap0o8dX12") ){
+                    Intent intent = new Intent(this, DoctorActivity.class);
+                    startActivity(intent);
+                    this.finish();
+                }else{
+                    //Checking for User (New/Old)
+                    if (user.getMetadata().getCreationTimestamp() == user.getMetadata().getLastSignInTimestamp()) {
+                      //  showMessage("NEW USER");
+                        addUser();
+                    } else {
+                      //  showMessage("OLD USER");
+                    }
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                    this.finish();
                 }
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                this.finish();
-
             } else {
                 // Signing in failed
                 IdpResponse response = IdpResponse.fromResultIntent(data);
                 if (response == null) {
-                    showMessage("onActivityResult: the user has cancelled the sign in request");
+                  //  showMessage("onActivityResult: the user has cancelled the sign in request");
                 } else {
-                    showMessage("onActivityResult: " + response.getError());
+                  //  showMessage("onActivityResult: " + response.getError());
                 }
             }
 
@@ -153,7 +172,6 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference userRef = database.collection("users")
                 .document();
-        UserModel user = new UserModel();
         user.setUserID(FirebaseAuth.getInstance().getCurrentUser().getUid());
         user.setID(userRef.getId());
         user.setImage("");
@@ -165,11 +183,12 @@ public class LoginActivity extends AppCompatActivity {
         user.setContact("");
         user.setWeight("");
         user.setBloodGroup("");
-        showMessage("useradded!");
+      //  showMessage("useradded!");
         userRef.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if( task.isSuccessful() ){
+                    data.setUser(user);
                     //showMessage("Schedule Inserted");
                 }else{
                     //showMessage("Schedule not Inserted");

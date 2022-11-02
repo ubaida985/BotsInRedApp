@@ -16,8 +16,10 @@
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/drawable/round_button_bg.xml" value="0.176" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/drawable/round_edit_bg.xml" value="0.176" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/drawable/white_rect_bg.xml" value="0.176" />
+        <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/activity_admin.xml" value="0.25" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/activity_alarm.xml" value="0.22826086956521738" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/activity_details.xml" value="0.2359375" />
+        <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/activity_doctor.xml" value="0.25" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/activity_login.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/activity_main.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/date.xml" value="0.27447916666666666" />
@@ -27,6 +29,7 @@
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_details.xml" value="0.2359375" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_dose_detail.xml" value="0.22826086956521738" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_doses.xml" value="0.22826086956521738" />
+        <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_graph.xml" value="0.2359375" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_home.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_log_in.xml" value="0.1265625" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_pill_category.xml" value="0.22826086956521738" />
@@ -34,6 +37,7 @@
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_setting.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_shop.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_sign_up.xml" value="0.27447916666666666" />
+        <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/fragment_user.xml" value="0.25" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_add.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_blood_group.xml" value="0.25" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_category.xml" value="0.22826086956521738" />
@@ -45,9 +49,11 @@
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_info.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_phone.xml" value="0.25" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_task.xml" value="0.27447916666666666" />
+        <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_user.xml" value="0.25" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/item_weight.xml" value="0.25" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/login_tab_fragment.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/layout/signup_tab_fragment.xml" value="0.22435897435897437" />
+        <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/menu/admin_menu.xml" value="0.25" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/menu/bottom_menu.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/menu/login_menu.xml" value="0.27447916666666666" />
         <entry key="..\:/Code/Projects/AndroidStudioProjects/BotsInRed/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.237" />

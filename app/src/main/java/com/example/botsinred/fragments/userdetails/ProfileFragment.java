@@ -39,6 +39,8 @@ public class ProfileFragment extends Fragment {
     private ImageView imageViewBack;
     private RoundedImageView roundedImageViewAvatar;
 
+
+    Data data;
     UserModel user;
     public ProfileFragment() {
         // Required empty public constructor
@@ -139,7 +141,8 @@ public class ProfileFragment extends Fragment {
         imageViewBack = getView().findViewById(R.id.imageViewBack);
         roundedImageViewAvatar = getView().findViewById(R.id.roundedImageViewAvatar);
 
-        user = new UserModel();
+        data = new Data();
+        user = data.getUser();
     }
 
     private void loadFragment(Fragment fragment) {
@@ -150,7 +153,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void showMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
 

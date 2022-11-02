@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
@@ -51,18 +52,19 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener{
 
     //the bottom bar
-    MeowBottomNavigation bottomNavigation;
+    private MeowBottomNavigation bottomNavigation;
 
     //for the alarm
-    Calendar calendar;
-    AlarmManager alarmManager;
-    PendingIntent pendingIntent;
-    ArrayList<PendingIntent> pendingIntents;
-    int hours, mins;
-    String doseTime;
-    ArrayList<ScheduleModel> schedules;
+    private Calendar calendar;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
+    private ArrayList<PendingIntent> pendingIntents;
+    private int hours, mins;
+    private String doseTime;
+    private ArrayList<ScheduleModel> schedules;
 
-    UserModel user;
+    private UserModel user;
+    private Data data;
     //for signing in
     private int AUTHUI_REQUEST_CODE = 10001;
 
@@ -99,11 +101,8 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                 if( task.isSuccessful() ){
                     for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                         user = queryDocumentSnapshot.toObject(UserModel.class);
-                        //showMessage("Email " + user.getEmail());
-
-                        System.out.println("Email " +  user.getEmail());
+                        data.setUser(user);
                     }
-
                 }else{
 
                 }
@@ -144,7 +143,8 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
 
     private void initializer() {
         bottomNavigation = findViewById(R.id.bottomNavigation);
-        user = new UserModel();
+        data = new Data();
+        user = data.getUser();
         schedules = new ArrayList<>();
     }
 
@@ -186,10 +186,12 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
 
         bottomNavigation.setOnClickMenuListener(item -> {
             //display toast
-            showMessage("You clicked on " + item.getId());
+          //  showMessage("You clicked on " + item.getId());
         });
 
-        bottomNavigation.setOnReselectListener(item -> showMessage("You reselected " + item.getId()));
+      bottomNavigation.setOnReselectListener(
+              item -> showMessage("You reselected " + item.getId())
+      );
     }
 
 
@@ -203,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
     }
 
     private void showMessage(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     public void getAllDoses(){
@@ -227,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                 -> o1.getTime().compareTo(
                 o2.getTime()));
         Data data = new Data();
-        showMessage(schedules.toString());
+      //  showMessage(schedules.toString());
         data.setSchedule(schedules);
 
     }
@@ -323,6 +325,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
     @Override
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
         if (firebaseAuth.getCurrentUser() == null) {
+            //showMessage("going out!");
             startLoginActivity();
             return;
         }

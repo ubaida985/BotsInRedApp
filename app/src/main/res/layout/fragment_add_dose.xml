@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_weight="1"
-                    android:text="4"
+                    android:text="1"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textStyle="bold"
@@ -92,11 +92,11 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonAddPill"
+                android:id="@+id/buttonAddMore"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:background="@drawable/round_button_bg"
-                android:text="Add Dose"
+                android:text="Add More Pills"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
@@ -105,6 +105,20 @@
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:backgroundTint="@color/colorAccent"
                 />
+            <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonAddPill"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/round_button_bg"
+            android:text="Complete Dose"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:backgroundTint="@color/colorAccent"
+            />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

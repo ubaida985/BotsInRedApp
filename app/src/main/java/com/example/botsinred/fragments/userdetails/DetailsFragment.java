@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.botsinred.R;
+import com.example.botsinred.database.Data;
 import com.example.botsinred.models.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -53,6 +54,7 @@ public class DetailsFragment extends Fragment {
     private FrameLayout layoutAddImage;
     private String encodedImage;
     UserModel user;
+    Data data;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -102,7 +104,7 @@ public class DetailsFragment extends Fragment {
 
     private boolean validEntries() {
         if( encodedImage == null ){
-            showMessage("Please select a image");
+           showMessage("Please select a image");
             return false;
         }else if( editTextName.getText().toString().equals("") ){
             showMessage("Please enter your name");
@@ -193,7 +195,8 @@ public class DetailsFragment extends Fragment {
 
         layoutAddImage = getView().findViewById(R.id.layoutAddImage);
 
-        user = new UserModel();
+        data = new Data();
+        user = data.getUser();
 
         editTextAddress.setText(user.getAddress());
         editTextName.setText(user.getName());
@@ -202,7 +205,7 @@ public class DetailsFragment extends Fragment {
         editTextEmergencyContact.setText(user.getEmergencyContact());
         editTextEmail.setText(user.getEmail());
         editTextBloodGroup.setText(user.getBloodGroup());
-        if(  user.getImage() != null  ){
+        if(  user.getImage() != null && !user.getImage().equals("")  ){
             byte[] bytes = Base64.decode(user.getImage(), Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             roundedImageViewProfile.setImageBitmap(bitmap);
@@ -262,6 +265,6 @@ public class DetailsFragment extends Fragment {
     }
 
     private void showMessage(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

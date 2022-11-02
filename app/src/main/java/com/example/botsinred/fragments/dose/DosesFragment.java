@@ -92,6 +92,7 @@ public class DosesFragment extends Fragment implements ScheduleAdapter.OnViewIte
 
         //add listeners
         addListener();
+
     }
 
     private void addListener() {
@@ -140,9 +141,29 @@ public class DosesFragment extends Fragment implements ScheduleAdapter.OnViewIte
     }
 
     @Override
+    public void onItemLongClick(int position) {
+       // showMessage("Copied!");
+        ScheduleModel schedule = new ScheduleModel();
+        schedule.setCategories(schedules.get(position).getCategories());
+        schedule.setDoseDate(schedules.get(position).getDoseDate());
+        schedule.setDoseDate("null");
+        schedule.setTime("null:null AM");
+        schedule.setName(schedules.get(position).getName());
+        schedules.add(schedule);
+        addSchedule(schedule);
+        Data data = new Data();
+        data.setSchedule(schedules);
+        scheduleAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
     public void onItemClick(int position) {
         ScheduleModel schedule = schedules.get(position);
         Fragment fragment = new PillCategoryFragment();
+        if( schedule.getTime().equals("null:null AM") ){
+            fragment = new DoseDetailFragment();
+        }
         Bundle bundle = new Bundle();
         bundle.putString("doseName", schedule.getName());
         bundle.putString("doseTime", schedule.getTime());
@@ -151,8 +172,9 @@ public class DosesFragment extends Fragment implements ScheduleAdapter.OnViewIte
     }
 
 
+
     ScheduleModel schedule;
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -167,7 +189,7 @@ public class DosesFragment extends Fragment implements ScheduleAdapter.OnViewIte
                     deleteSchedule(schedule.getScheduleID());
                     schedules.remove(position);
                     scheduleAdapter.notifyItemRemoved(position);
-                    showMessage("Deleted");
+                   // showMessage("Deleted");
                     Snackbar.make(recyclerViewDoses, schedule.getName(), Snackbar.LENGTH_LONG)
                             .setAction("Undo", new View.OnClickListener() {
                                 @Override
@@ -175,7 +197,7 @@ public class DosesFragment extends Fragment implements ScheduleAdapter.OnViewIte
                                     schedules.add(position, schedule);
                                     addSchedule(schedule);
                                     scheduleAdapter.notifyItemInserted(position);
-                                    showMessage("Added Back");
+                                    //  showMessage("Added Back");
                                 }
                             }).show();
                     break;
@@ -183,16 +205,26 @@ public class DosesFragment extends Fragment implements ScheduleAdapter.OnViewIte
                 case ItemTouchHelper.RIGHT:
                     schedules.get(position).setCompleted(true);
                     schedule = schedules.get(position);
+                    schedule.setCompleted(true);
                     schedules.remove(position);
                     scheduleAdapter.notifyItemRemoved(position);
-                    showMessage("Marked as completed");
+                    schedules.add(schedules.size(), schedule);
+                    scheduleAdapter.notifyItemInserted(schedules.size());
+                    deleteSchedule(schedule.getScheduleID());
+                    addSchedule(schedule);
+                  //  showMessage("Marked as completed");
                     Snackbar.make(recyclerViewDoses, schedule.getName(), Snackbar.LENGTH_LONG)
                             .setAction("Undo", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    schedules.remove(schedules.size()-1);
+                                    scheduleAdapter.notifyItemRemoved(schedules.size());
                                     schedules.add(position, schedule);
                                     scheduleAdapter.notifyItemInserted(position);
-                                    showMessage("Marked as incomplete");
+                                    schedules.get(position).setCompleted(true);
+                                    deleteSchedule(schedule.getScheduleID());
+                                    addSchedule(schedule);
+                                 //   showMessage("Marked as incomplete");
                                 }
                             }).show();
                     break;
@@ -287,7 +319,6 @@ public class DosesFragment extends Fragment implements ScheduleAdapter.OnViewIte
                 .document();
         schedule.setUserID(FirebaseAuth.getInstance().getCurrentUser().getUid());
         schedule.setScheduleID(scheduleRef.getId());
-        schedule.setCompleted(false);
 
         scheduleRef.set(schedule).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

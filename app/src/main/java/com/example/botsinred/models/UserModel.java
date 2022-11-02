@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 @IgnoreExtraProperties
 public class UserModel {
-    public static String id="", userID="",  image = "", username = "", name = "", address = "", contact = "", emergencyContact = "", email = "", bloodGroup = "", weight = "";
+    public String id="", userID="",  image = "", username = "", name = "", address = "", contact = "", emergencyContact = "", email = "", bloodGroup = "", weight = "";
 
     public UserModel() {
     }

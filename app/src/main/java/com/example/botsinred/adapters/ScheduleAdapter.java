@@ -52,7 +52,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         return schedules.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private TextView textViewDoseName, textViewDoseQty, textViewDoseTime;
         OnViewItemClickListener onViewItemClickListener;
@@ -65,16 +65,25 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             textViewDoseTime = itemView.findViewById(R.id.textViewDoseTime);
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
             this.onViewItemClickListener = onViewItemClickListener;
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            onViewItemClickListener.onItemLongClick(getAdapterPosition());
+            return true;
         }
 
         @Override
         public void onClick(View v) {
             onViewItemClickListener.onItemClick(getAdapterPosition());
         }
+
     }
 
     public interface OnViewItemClickListener{
+        void onItemLongClick( int position );
         void onItemClick( int position );
     }
 }

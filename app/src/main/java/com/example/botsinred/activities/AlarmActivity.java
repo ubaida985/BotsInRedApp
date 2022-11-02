@@ -55,7 +55,7 @@ public class AlarmActivity extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
         String format = dateFormat.format(new Date());
         format = format.toUpperCase();
-        showMessage(""+format);
+        //showMessage(""+format);
         int i = 0, minDif = Integer.MAX_VALUE;
         for( ScheduleModel schedule : schedules ){
             int x = Math.abs(schedule.getTime().compareTo(""+format));

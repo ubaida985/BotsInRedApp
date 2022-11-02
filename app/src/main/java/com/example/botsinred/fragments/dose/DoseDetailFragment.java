@@ -1,50 +1,36 @@
 package com.example.botsinred.fragments.dose;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
-
 import com.example.botsinred.R;
-import com.example.botsinred.models.ScheduleModel;
-import com.example.botsinred.utilities.AlarmReceiver;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
-import com.makeramen.roundedimageview.RoundedImageView;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 public class DoseDetailFragment extends Fragment {
-
-    private EditText editTextDoseName;
-    private Button buttonTime, buttonSubmit, buttonDate;
 
     String doseName, doseTime, doseDate;
     MaterialTimePicker picker;
     MaterialDatePicker materialDatePicker;
+    private EditText editTextDoseName;
+    private Button buttonTime, buttonSubmit, buttonDate;
+
     public DoseDetailFragment() {
         // Required empty public constructor
     }
@@ -91,7 +77,7 @@ public class DoseDetailFragment extends Fragment {
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( validateEntries() ){
+                if (validateEntries()) {
                     Fragment fragment = new PillCategoryFragment();
                     Bundle data = new Bundle();
                     data.putString("doseName", doseName);
@@ -105,25 +91,32 @@ public class DoseDetailFragment extends Fragment {
     }
 
 
-
     private boolean validateEntries() {
-        doseName = editTextDoseName.getText().toString();
-        doseTime = buttonTime.getText().toString();
-        if( doseName.equals("") ){
-            showMessage("Enter a valid dose name");
+        if(editTextDoseName.length() > 0) {
+            doseName = editTextDoseName.getText().toString();
+        }
+        if(doseTime.length() > 0 ) {
+            doseTime = buttonTime.getText().toString();
+        }
+        if (doseName.equals("")) {
+           // showMessage("Enter a valid dose name");
             return false;
         }
-        if( doseTime.length() <= 5 ){
-            showMessage("Select time");
+        if (doseTime.length() <= 5) {
+           // showMessage("Select time");
             return false;
         }
         return true;
     }
 
     private void pickDate() {
-        MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker()
-                .setTheme(R.style.MaterialCalendarTheme);
+        CalendarConstraints.Builder calendarConstraintBuilder = new CalendarConstraints
+                .Builder().
+                setValidator(DateValidatorPointForward.now());
 
+        MaterialDatePicker.Builder materialDateBuilder = MaterialDatePicker.Builder.datePicker()
+                .setTheme(R.style.MaterialCalendarTheme)
+                .setCalendarConstraints(calendarConstraintBuilder.build());
         // now define the properties of the
         // materialDateBuilder that is title text as SELECT A DATE
         materialDateBuilder.setTitleText("SELECT A DATE");
@@ -156,20 +149,20 @@ public class DoseDetailFragment extends Fragment {
     }
 
     private void pickTime() {
-        picker = new MaterialTimePicker.Builder ( )
-                .setTimeFormat ( TimeFormat.CLOCK_12H )
-                .setHour( 12 )
-                .setMinute( 0 )
-                .setTitleText ("Select Alarm Time")
+        picker = new MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(12)
+                .setMinute(0)
+                .setTitleText("Select Alarm Time")
                 .setTheme(R.style.AppTheme_TimePickerTheme)
                 .build();
 
-        picker.show( getActivity().getSupportFragmentManager ( ), "RedBots" ) ;
-        picker.addOnPositiveButtonClickListener( new View.OnClickListener () {
+        picker.show(getActivity().getSupportFragmentManager(), "RedBots");
+        picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (picker.getHour() > 12) {
-                    doseTime = String.format("%02d", (picker.getHour()-12)) + ":" + String.format("%02d", picker.getMinute());
+                    doseTime = String.format("%02d", (picker.getHour() - 12)) + ":" + String.format("%02d", picker.getMinute());
                     doseTime += " PM";
                 } else {
                     doseTime = String.format("%02d", picker.getHour()) + ":" + String.format("%02d", picker.getMinute());
@@ -177,9 +170,8 @@ public class DoseDetailFragment extends Fragment {
                 }
                 buttonTime.setText(doseTime);
             }
-        }) ;
+        });
     }
-
 
 
     private void initializer() {
@@ -201,5 +193,16 @@ public class DoseDetailFragment extends Fragment {
 
     private void showMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPause() {
+
+        // hide the keyboard in order to avoid getTextBeforeCursor on inactive InputConnection
+        InputMethodManager inputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        inputMethodManager.hideSoftInputFromWindow(editTextDoseName.getWindowToken(), 0);
+
+        super.onPause();
     }
 }

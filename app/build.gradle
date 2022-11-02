@@ -63,6 +63,9 @@ dependencies {
     //Cloud Storage
     implementation 'com.google.firebase:firebase-storage:19.1.0'
 
+    //graphView
+    implementation 'com.jjoe64:graphview:4.2.2'
+
 }
 
 // Add the following line to the bottom of the file:
