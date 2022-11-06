@@ -18,6 +18,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ScanningActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.DoctorActivity"
             android:exported="false" />
         <activity

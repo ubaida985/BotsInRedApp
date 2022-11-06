@@ -6,13 +6,14 @@ import java.util.ArrayList;
 
 @IgnoreExtraProperties
 public class UserModel {
-    public String id="", userID="",  image = "", username = "", name = "", address = "", contact = "", emergencyContact = "", email = "", bloodGroup = "", weight = "";
+    public String deviceID = "", id="", userID="",  image = "", username = "", name = "", address = "", contact = "", emergencyContact = "", email = "", bloodGroup = "", weight = "";
 
     public UserModel() {
     }
 
 
-    public UserModel(String id, String userID, String image, String username, String name, String address, String contact, String emergencyContact, String email, String bloodGroup, String weight) {
+    public UserModel(String deviceID, String id, String userID, String image, String username, String name, String address, String contact, String emergencyContact, String email, String bloodGroup, String weight) {
+        this.deviceID = deviceID;
         this.id = id;
         this.userID = userID;
         this.image = image;
@@ -36,6 +37,15 @@ public class UserModel {
         this.bloodGroup = bloodGroup;
         this.weight = weight;
     }
+
+    public String getDeviceID() {
+        return deviceID;
+    }
+
+    public void setDeviceID(String deviceID) {
+        this.deviceID = deviceID;
+    }
+
     public String getID() {
         return id;
     }
@@ -122,5 +132,23 @@ public class UserModel {
 
     public void setWeight(String weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "deviceID='" + deviceID + '\'' +
+                ", id='" + id + '\'' +
+                ", userID='" + userID + '\'' +
+                ", image='" + image + '\'' +
+                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", contact='" + contact + '\'' +
+                ", emergencyContact='" + emergencyContact + '\'' +
+                ", email='" + email + '\'' +
+                ", bloodGroup='" + bloodGroup + '\'' +
+                ", weight='" + weight + '\'' +
+                '}';
     }
 }

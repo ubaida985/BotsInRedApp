@@ -22,9 +22,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -37,8 +41,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private int AUTHUI_REQUEST_CODE = 10001;
     private TextView textViewLogin;
-    private Data data = new Data();
-    private UserModel user = new UserModel();
+    private Data data;
+    private static UserModel user;
 
 
     @Override
@@ -60,10 +64,16 @@ public class LoginActivity extends AppCompatActivity {
 
         //setup top menu bar
         //setupTopBar();
-       if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+        checkForLogin();
+
+    }
+
+    private void checkForLogin() {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             user.setUserID(FirebaseAuth.getInstance().getCurrentUser().getUid());
             data.setUser(user);
-          // showMessage("UserID: " + user.getUserID());
+            System.out.println(user.toString());
+            // showMessage("UserID: " + user.getUserID());
             if( user.getUserID().equals("pr02PY2fuxTpMNxg9G0FbpzA4oD3") ){
                 startActivity(new Intent(this, AdminActivity.class));
                 this.finish();
@@ -71,13 +81,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(this, DoctorActivity.class));
                 this.finish();
             }else{
-                startActivity(new Intent(this, MainActivity.class));
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 this.finish();
             }
         }else{
-           // showMessage("Not signed In");
+            // showMessage("Not signed In");
         }
-
     }
 
     private void deconstruct() {
@@ -150,7 +160,8 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                       //  showMessage("OLD USER");
                     }
-                    Intent intent = new Intent(this, MainActivity.class);
+                    Intent intent;
+                    intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     this.finish();
                 }
@@ -174,6 +185,7 @@ public class LoginActivity extends AppCompatActivity {
                 .document();
         user.setUserID(FirebaseAuth.getInstance().getCurrentUser().getUid());
         user.setID(userRef.getId());
+        System.out.println(user.getID());
         user.setImage("");
         user.setUsername("");
         user.setName("");
@@ -254,5 +266,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initialize() {
         textViewLogin = findViewById(R.id.textViewLogin);
+        data = new Data();
+        data.setUser(new UserModel());
+        user = data.getUser();
     }
 }

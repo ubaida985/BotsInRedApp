@@ -93,7 +93,6 @@ public class DetailsFragment extends Fragment {
         buttonSubmit.setOnClickListener(v -> {
             addDetails();
             if( validEntries() ){
-
                 loadFragment(new ProfileFragment());
             }
         });
@@ -132,7 +131,6 @@ public class DetailsFragment extends Fragment {
     }
 
     private void addDetails() {
-        showMessage(this.user.getID());
         this.user.setImage(encodedImage);
         this.user.setUsername(editTextEmail.getText().toString());
         this.user.setName(editTextName.getText().toString());
@@ -157,6 +155,7 @@ public class DetailsFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
 
+        System.out.println(this.user.getID());
         DocumentReference userRef = database.collection("users")
                                             .document(this.user.getID());
         userRef.update(userData)
@@ -168,7 +167,7 @@ public class DetailsFragment extends Fragment {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        //showMessage("failed to add");
+                        System.out.println(e.toString());
                     }
                 });
 
@@ -197,7 +196,6 @@ public class DetailsFragment extends Fragment {
 
         data = new Data();
         user = data.getUser();
-
         editTextAddress.setText(user.getAddress());
         editTextName.setText(user.getName());
         editTextWeight.setText(user.getWeight());
@@ -265,6 +263,6 @@ public class DetailsFragment extends Fragment {
     }
 
     private void showMessage(String message) {
-        //Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

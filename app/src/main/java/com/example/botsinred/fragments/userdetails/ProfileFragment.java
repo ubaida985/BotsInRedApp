@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.botsinred.R;
 import com.example.botsinred.activities.LoginActivity;
+import com.example.botsinred.activities.ScanningActivity;
 import com.example.botsinred.database.Data;
 import com.example.botsinred.fragments.HomeFragment;
 import com.example.botsinred.models.UserModel;
@@ -85,6 +86,8 @@ public class ProfileFragment extends Fragment {
         textViewEmail.setText(user.getEmail());
         textViewAddress.setText(user.getAddress());
         textViewBloodGroup.setText(user.getBloodGroup());
+        String text = "Device ID: " + user.getDeviceID().toString();
+        textViewDeviceID.setText(text);
     }
 
     private void addListeners() {
@@ -116,6 +119,12 @@ public class ProfileFragment extends Fragment {
                         });
             }
 
+        });
+        textViewDeviceID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity().getApplicationContext(), ScanningActivity.class));
+            }
         });
     }
 

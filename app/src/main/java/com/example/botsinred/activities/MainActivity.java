@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
         //fetching user data
         fetchUserData();
 
+
     }
 
     private void fetchUserData() {
@@ -104,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                         data.setUser(user);
                     }
                 }else{
-
                 }
             }
         });
